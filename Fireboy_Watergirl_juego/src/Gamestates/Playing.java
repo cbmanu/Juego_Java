@@ -3,8 +3,10 @@ package Gamestates;
 import Entidades.Jugador;
 import Inputs.Statemethods;
 import Juego.Juego;
+import Juego.PanelJuego;
 import Niveles.NivelManager;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -13,10 +15,11 @@ public class Playing extends State implements Statemethods {
 
     private Jugador jugador;
     private NivelManager nivelmanager;
-
-    public Playing(Juego juego) {
+    private JTextField name;
+    public Playing(Juego juego, PanelJuego panel) {
         super(juego);
         iniciClases();
+        name=panel.getJTextField();
     }
 
     private void iniciClases() {
@@ -33,6 +36,7 @@ public class Playing extends State implements Statemethods {
 
     @Override
     public void update() {
+        name.setVisible(false);
         nivelmanager.update();
         jugador.update();
     }
@@ -42,7 +46,10 @@ public class Playing extends State implements Statemethods {
         nivelmanager.draw(g);
         jugador.render(g);
     }
+    @Override
+    public void mousePressed(MouseEvent e) {
 
+    }
     @Override
     public void mouseClicked(MouseEvent e) {
 

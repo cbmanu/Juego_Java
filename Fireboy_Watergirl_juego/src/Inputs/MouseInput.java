@@ -20,9 +20,6 @@ public class MouseInput implements MouseListener, MouseMotionListener{
            case PLAYING:
                paneljuego.getJuego().getPlaying().mouseClicked(me);
                break;
-           case MENU:
-               paneljuego.getJuego().getMenu().mouseClicked(me);
-               break;
            default:
                break;
        }
@@ -30,11 +27,43 @@ public class MouseInput implements MouseListener, MouseMotionListener{
 
     @Override
     public void mousePressed(MouseEvent me) {
+        switch (Gamestate.state){
+            case PLAYING:
+                paneljuego.getJuego().getPlaying().mousePressed(me);
+                break;
+            case MENU:
+                paneljuego.getJuego().getMenu().mousePressed(me);
+                break;
+            case SELECCION:
+                paneljuego.getJuego().getSeleccion().mousePressed(me);
+                break;
+            case INSTRUCCIONES:
+                paneljuego.getJuego().getInstrucciones().mousePressed(me);
+                break;
+            default:
+                break;
+        }
          
     }
 
     @Override
     public void mouseReleased(MouseEvent me) {
+        switch (Gamestate.state){
+            case PLAYING:
+                paneljuego.getJuego().getPlaying().mouseReleased(me);
+                break;
+            case MENU:
+                paneljuego.getJuego().getMenu().mouseReleased(me);
+                break;
+            case SELECCION:
+                paneljuego.getJuego().getSeleccion().mouseReleased(me);
+                break;
+            case INSTRUCCIONES:
+                paneljuego.getJuego().getInstrucciones().mouseReleased(me);
+                break;
+            default:
+                break;
+        }
          
     }
 
@@ -55,6 +84,22 @@ public class MouseInput implements MouseListener, MouseMotionListener{
 
     @Override
     public void mouseMoved(MouseEvent me) {
+        switch (Gamestate.state){
+            case PLAYING:
+                paneljuego.getJuego().getPlaying().mouseMoved(me);
+                break;
+            case MENU:
+                paneljuego.getJuego().getMenu().mouseMoved(me);
+                break;
+            case SELECCION:
+                paneljuego.getJuego().getSeleccion().mouseMoved(me);
+                break;
+            case INSTRUCCIONES:
+                paneljuego.getJuego().getInstrucciones().mouseMoved(me);
+                break;
+            default:
+                break;
+        }
      
     }
     

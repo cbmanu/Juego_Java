@@ -1,8 +1,8 @@
 package Juego;
 import Inputs.*;
 import static Juego.Juego.*;
-import java.awt.Dimension;
-import java.awt.Graphics;
+
+import java.awt.*;
 
 import javax.swing.*;
 
@@ -10,7 +10,8 @@ public class PanelJuego extends JComponent{
     //atributos
     private MouseInput mouseinput;
     private Juego juego;
- 
+    private JTextField name;
+
     //constructor
     public PanelJuego(Juego juego){
         mouseinput = new MouseInput(this);
@@ -22,6 +23,14 @@ public class PanelJuego extends JComponent{
         addKeyListener(new TecladoInput(this));
         addMouseListener(mouseinput);
         addMouseMotionListener(mouseinput);
+        name=new JTextField("Coloca Tu Nombre");
+        name.setFont(new Font("Helvetica",Font.BOLD,30));
+        name.setHorizontalAlignment(SwingConstants.CENTER);
+        name.setForeground(Color.black);
+        name.setBounds(450,650,300,100);
+        name.setVisible(false);
+        this.add(name);
+
     }
     
     //size window 
@@ -35,7 +44,9 @@ public class PanelJuego extends JComponent{
     public void updateJuego(){
         
     }
-    
+    public JTextField getJTextField(){
+        return name;
+    }
     //dibujar componentes
     @Override
     public void paintComponent(Graphics g){

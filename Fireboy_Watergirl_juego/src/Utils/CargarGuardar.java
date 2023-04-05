@@ -11,9 +11,11 @@ public class CargarGuardar {
     public static final String JUGADOR_ATLAS = "FireSprites.png";
     public static final String NIVEL_ATLAS = "outside_sprites.png";
     public static final String NIVEL_ONE_DATA = "level_o_data.png";
+    public static final String MENU_BUTTONS="buttons.png";
+    public static final String MENU_BACKGROUND="menuBackground.png";
     public static final String FIREBOY_IMAGE="fireboy.jpg";
     public static final String WATERGIRL_IMAGE="watergirl.jpg";
-    public static final String PRESENTATION_IMAGE="fireboy-watergirl.jpg";
+    public static final String PRESENTATION_IMAGE="presentation.png";
 
 
     //metodo trycatch 
@@ -22,7 +24,7 @@ public class CargarGuardar {
          InputStream is = CargarGuardar.class.getResourceAsStream("res/" + nombreArch);
        
         try {
-           img = ImageIO.read(is); 
+            img = ImageIO.read(is);
         }catch (IOException ex) {
             ex.printStackTrace();
         } finally {

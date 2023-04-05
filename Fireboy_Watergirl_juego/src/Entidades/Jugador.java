@@ -1,6 +1,8 @@
 package Entidades;
 import Gamestates.Menu;
 import Gamestates.Playing;
+import Gamestates.Seleccion;
+import Gamestates.Instrucciones;
 import Utils.CargarGuardar;
 import static Utils.Constantes.ConstantJugador.*;
 import java.awt.Graphics;

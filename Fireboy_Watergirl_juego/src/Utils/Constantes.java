@@ -6,8 +6,8 @@ import Juego.Juego;
 public class Constantes {
     public static class UI{
         public static class MenuButtons{
-            public static final int B_WIDTH_DEFAULT=146;
-            public static final int B_HEIGHT_DEFAULT=146;
+            public static final int B_WIDTH_DEFAULT=260;
+            public static final int B_HEIGHT_DEFAULT=167;
             public static final int B_WIDTH=(int)(B_WIDTH_DEFAULT + Juego.SCALA);
             public static final int B_HEIGHT=(int)(B_HEIGHT_DEFAULT + Juego.SCALA);
 

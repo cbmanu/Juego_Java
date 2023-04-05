@@ -2,55 +2,65 @@ package Gamestates;
 
 import Inputs.Statemethods;
 import Juego.Juego;
+import Juego.VentanaJuego;
+import Juego.PanelJuego;
 import Utils.CargarGuardar;
 import ui.MenuButtons;
 
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
-public class Menu extends State implements Statemethods {
-    private MenuButtons[] buttons=new MenuButtons[3];
-    private BufferedImage backgroundImg,presentationImg;
-    public Menu(Juego juego) {
+public class Seleccion extends State implements Statemethods {
+    private MenuButtons[] buttons=new MenuButtons[2];
+    private JTextField name;
+
+    private BufferedImage backgroundImg,fireboyImg,watergirlImg;
+    public Seleccion(Juego juego, PanelJuego panel){
         super(juego);
-        loadPresentation();
         loadBackground();
+        loadCharacters();
         loadButtons();
-    }
-    private void loadPresentation() {
-        presentationImg=CargarGuardar.GetSpriteAtlas(CargarGuardar.PRESENTATION_IMAGE);
+        name=panel.getJTextField();
     }
     private void loadBackground() {
         backgroundImg = CargarGuardar.GetSpriteAtlas(CargarGuardar.MENU_BACKGROUND);
     }
+    private void loadButtons(){
+        buttons[0]=new MenuButtons(250,(int)(500*Juego.SCALA),1,Gamestate.SALIR);
+        buttons[1]=new MenuButtons(950,(int)(500*Juego.SCALA),2,Gamestate.PLAYING);
 
-    private void loadButtons() {
-        buttons[0]=new MenuButtons(200,(int)(500*Juego.SCALA),2,Gamestate.SELECCION);
-        buttons[1]=new MenuButtons(600,(int)(500*Juego.SCALA),0,Gamestate.INSTRUCCIONES);
-        buttons[2]=new MenuButtons(1000,(int)(500*Juego.SCALA),1,Gamestate.SALIR);
     }
-
+    private void loadCharacters(){
+        fireboyImg=CargarGuardar.GetSpriteAtlas(CargarGuardar.FIREBOY_IMAGE);
+        watergirlImg=CargarGuardar.GetSpriteAtlas(CargarGuardar.WATERGIRL_IMAGE);
+    }
     @Override
     public void update() {
-        for (MenuButtons mb:buttons){
+        for (MenuButtons mb : buttons) {
             mb.update();
         }
+        name.setVisible(true);
     }
 
     @Override
     public void draw(Graphics g) {
         g.drawImage(backgroundImg,0,0,Juego.JUEGO_WIDTH,Juego.JUEGO_HEIGHT,null);
-        g.drawImage(presentationImg,344,50,512,512,null);
-        for (MenuButtons mb:buttons)
+        g.drawImage(fireboyImg,200,150,300,300,null);
+        g.drawImage(watergirlImg,700,150,300,300,null);
+        for (MenuButtons mb : buttons) {
             mb.draw(g);
+        }
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
 
     }
+
     @Override
     public void mousePressed(MouseEvent e) {
         for (MenuButtons mb:buttons){
@@ -59,7 +69,14 @@ public class Menu extends State implements Statemethods {
                 break;
             }
         }
+
     }
+    private void resetButtons() {
+        for (MenuButtons mb : buttons) {
+            mb.resetBools();
+        }
+    }
+
     @Override
     public void mouseReleased(MouseEvent e) {
         for (MenuButtons mb : buttons) {
@@ -71,12 +88,6 @@ public class Menu extends State implements Statemethods {
             }
         }
         resetButtons();
-    }
-
-    private void resetButtons() {
-        for (MenuButtons mb : buttons) {
-            mb.resetBools();
-        }
     }
 
     @Override
@@ -91,12 +102,13 @@ public class Menu extends State implements Statemethods {
             }
         }
     }
+
     @Override
     public void keyReleased(KeyEvent e) {
 
     }
 
     @Override
-    public void keyPressed(KeyEvent ke) {
+    public void keyPressed(KeyEvent e) {
     }
 }

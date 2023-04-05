@@ -1,7 +1,8 @@
 package Juego;
-import Gamestates.Gamestate;
-import Gamestates.Playing;
+import Gamestates.*;
 import Gamestates.Menu;
+import Gamestates.Seleccion;
+
 import java.awt.*;
 
 
@@ -14,6 +15,8 @@ public class Juego implements Runnable{
     private final int UPS_SET= 120;
     private Playing playing;
     private Menu menu;
+    private Seleccion seleccion;
+    private Instrucciones instrucciones;
     
     public final static int TILES_DEFAULT_SIZE= 32;
     public final static float SCALA = 1.25f; //1.5f
@@ -26,20 +29,21 @@ public class Juego implements Runnable{
     //constructor
     public Juego(){
         iniciClases();
-        
         paneljuego = new PanelJuego(this);
         ventanajuego = new VentanaJuego(paneljuego);
         paneljuego.requestFocus();
-  
+        seleccion=new Seleccion(this,paneljuego);
+        playing=new Playing(this,paneljuego);
         InicioLoop();
     }
-    
-    
+
+
+
     private void iniciClases() {
         menu=new Menu(this);
-        playing=new Playing(this);
+        instrucciones=new Instrucciones(this);
     }
-    
+
     private void InicioLoop(){
         juegoThread = new Thread(this);
         juegoThread.start();
@@ -52,6 +56,14 @@ public class Juego implements Runnable{
                break;
            case PLAYING:
                playing.update();
+               break;
+           case INSTRUCCIONES:
+               break;
+           case SELECCION:
+               seleccion.update();
+               break;
+           case SALIR:
+               System.exit(0);
                break;
            default:
                break;
@@ -66,6 +78,8 @@ public class Juego implements Runnable{
             case PLAYING:
                 playing.draw(g);
                 break;
+            case SELECCION:
+                seleccion.draw(g);
             default:
                 break;
         }
@@ -121,11 +135,19 @@ public class Juego implements Runnable{
             playing.getJugador().resetDirBoolean();
         }
     }
+
     public Menu getMenu(){
       return menu;
     }
+
     public Playing getPlaying() {
         return playing;
+    }
+    public Seleccion getSeleccion() {
+        return seleccion;
+    }
+    public Instrucciones getInstrucciones() {
+        return instrucciones;
     }
 
 
