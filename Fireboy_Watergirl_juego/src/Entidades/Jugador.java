@@ -7,7 +7,7 @@ import Utils.CargarGuardar;
 import static Utils.Constantes.ConstantJugador.*;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-
+//ssss
 
 public class Jugador extends Entidad{
     //atributos
