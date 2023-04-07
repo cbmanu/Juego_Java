@@ -28,6 +28,23 @@ public class TecladoInput implements KeyListener {
             default:
                 break;
         }
+        
+        switch(ke.getKeyCode()){
+            case KeyEvent.VK_W:   //asegurando que con cada tecla se acabe el movimiento
+                paneljuego.getJuego().getJugador().setJump(false); //salto 
+                break;
+            case KeyEvent.VK_A:
+                paneljuego.getJuego().getJugador().setLeft(false);
+                break;
+            case KeyEvent.VK_D:
+                paneljuego.getJuego().getJugador().setRight(false);
+                break;
+            case KeyEvent.VK_S:
+                paneljuego.getJuego().getJugador().setDown(false);
+                break;
+            
+        }
+        
     }
 
     @Override
@@ -40,6 +57,21 @@ public class TecladoInput implements KeyListener {
                 paneljuego.getJuego().getMenu().keyPressed(ke);
                 break;
             default:
+                break;
+        }
+        
+        switch(ke.getKeyCode()){
+            case KeyEvent.VK_W:   //asegurando que con cada tecla se acabe el movimiento
+                paneljuego.getJuego().getJugador().setJump(true); //salto
+                break;
+            case KeyEvent.VK_A:
+                paneljuego.getJuego().getJugador().setLeft(true);
+                break;
+            case KeyEvent.VK_D:
+                paneljuego.getJuego().getJugador().setRight(true);
+                break;
+            case KeyEvent.VK_S:
+                paneljuego.getJuego().getJugador().setDown(true);
                 break;
         }
     }
