@@ -4,6 +4,22 @@ package Utils;
 import Juego.Juego;
 
 public class Constantes {
+    
+    //para las imagenes que acompanan el fondo
+    public static class Enviroment{
+        public static final int OBJ_DELFONDO_WIDTH_DEFAULT =448;
+        public static final int OBJ_DELFONDO_HEIGHT_DEFAULT =101;
+        public static final int OBJ2_DELFONDO_WIDTH_DEFAULT =74;
+        public static final int OBJ2_DELFONDO_HEIGHT_DEFAULT =24;
+        
+        //actual size
+        public static final int OBJ_DELFONDO_WIDTH =(int)(OBJ_DELFONDO_WIDTH_DEFAULT *Juego.SCALA);
+        public static final int OBJ_DELFONDO_HEIGHT =(int)(OBJ_DELFONDO_HEIGHT_DEFAULT *Juego.SCALA);
+        
+        public static final int OBJ2_DELFONDO_WIDTH =(int)(OBJ2_DELFONDO_WIDTH_DEFAULT *Juego.SCALA);
+        public static final int OBJ2_DELFONDO_HEIGHT =(int)(OBJ2_DELFONDO_HEIGHT_DEFAULT *Juego.SCALA);
+    }
+    
     public static class UI{
         public static class MenuButtons{
             public static final int B_WIDTH_DEFAULT=260;
