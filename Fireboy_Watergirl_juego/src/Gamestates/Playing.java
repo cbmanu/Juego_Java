@@ -3,6 +3,7 @@ package Gamestates;
 import Entidades.Jugador;
 import Inputs.Statemethods;
 import Juego.Juego;
+import static Juego.Juego.SCALA;
 import Juego.PanelJuego;
 import Niveles.NivelManager;
 
@@ -23,7 +24,7 @@ public class Playing extends State implements Statemethods {
     }
 
     private void iniciClases() {
-        jugador = new Jugador((36),(920-36-64-25));
+        jugador = new Jugador((50),(920-36-20-47),(int)(76*SCALA),(int)(76*SCALA));
         nivelmanager = new NivelManager(juego);
     }
     public void windowFocuseLost(){

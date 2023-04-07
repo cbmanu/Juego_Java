@@ -47,6 +47,8 @@ public class NivelManager {
     
     }
 
-    
+    public Nivel getNivelReciente(){
+        return nivelUno; 
+    }
     
 }
