@@ -7,7 +7,9 @@ import ui.MenuButtons;
 import java.awt.event.MouseEvent;
 
 public class State {
+    //atributos 
     protected Juego juego;
+    //constructor 
     public State(Juego juego) {
         this.juego = juego;
     }

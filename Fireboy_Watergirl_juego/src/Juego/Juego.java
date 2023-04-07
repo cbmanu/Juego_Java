@@ -20,8 +20,6 @@ public class Juego implements Runnable{
     private Seleccion seleccion;
     private Instrucciones instrucciones;
     
-    private Jugador jugador;
-    private NivelManager nivelmanager;
     
     public final static int TILES_DEFAULT_SIZE= 32;
     public final static float SCALA = 1.25f; //1.5f
@@ -48,9 +46,6 @@ public class Juego implements Runnable{
         menu=new Menu(this);
         instrucciones=new Instrucciones(this);
         
-        nivelmanager = new NivelManager(this);
-        jugador = new Jugador((50),(920-36-20-47),(int)(76*SCALA),(int)(76*SCALA)); //9090 (int)(64+SCALA)
-        jugador.loadNvlData(nivelmanager.getNivelReciente().getNivelData());
     }
 
     private void InicioLoop(){
@@ -59,8 +54,7 @@ public class Juego implements Runnable{
     }
 
     private void actualizar() {
-        jugador.update();
-        nivelmanager.update();
+        
         
        switch (Gamestate.state){
            case MENU:
@@ -83,8 +77,6 @@ public class Juego implements Runnable{
     }
     
     public void render(Graphics g){
-        nivelmanager.draw(g);
-        jugador.render(g);
         
         switch (Gamestate.state){
             case MENU:
@@ -146,16 +138,11 @@ public class Juego implements Runnable{
     }
      
     public void windowFocuseLost(){
-        jugador.resetDirBoolean();
         if(Gamestate.state ==Gamestate.PLAYING){
             playing.getJugador().resetDirBoolean();
         }
     }
 
-    public Jugador getJugador(){
-        return jugador;
-    }
-    
     public Menu getMenu(){
       return menu;
     }

@@ -16,7 +16,10 @@ public class Playing extends State implements Statemethods {
 
     private Jugador jugador;
     private NivelManager nivelmanager;
+    
     private JTextField name;
+    
+    //constructor 
     public Playing(Juego juego, PanelJuego panel) {
         super(juego);
         iniciClases();
@@ -24,8 +27,9 @@ public class Playing extends State implements Statemethods {
     }
 
     private void iniciClases() {
-        jugador = new Jugador((50),(920-36-20-47),(int)(76*SCALA),(int)(76*SCALA));
         nivelmanager = new NivelManager(juego);
+        jugador = new Jugador((50),(920-36-20-47),(int)(76*SCALA),(int)(76*SCALA)); //9090 (int)(64+SCALA)
+        jugador.loadNvlData(nivelmanager.getNivelReciente().getNivelData());
     }
     public void windowFocuseLost(){
         jugador.resetDirBoolean();
@@ -70,16 +74,13 @@ public class Playing extends State implements Statemethods {
     public void keyReleased(KeyEvent e) {
         switch(e.getKeyCode()){
             case KeyEvent.VK_W:   //asegurando que con cada tecla se acabe el movimiento
-                jugador.setUp(false);
+                jugador.setJump(false); //salto 
                 break;
             case KeyEvent.VK_A:
                 jugador.setLeft(false);
                 break;
             case KeyEvent.VK_D:
                 jugador.setRight(false);
-                break;
-            case KeyEvent.VK_S:
-                jugador.setDown(false);
                 break;
         }
 
@@ -89,16 +90,13 @@ public class Playing extends State implements Statemethods {
     public void keyPressed(KeyEvent e) {
         switch(e.getKeyCode()){
             case KeyEvent.VK_W:   //asegurando que con cada tecla se acabe el movimiento
-                jugador.setUp(true);
+                jugador.setJump(true); //salto
                 break;
             case KeyEvent.VK_A:
                 jugador.setLeft(true);
                 break;
             case KeyEvent.VK_D:
                 jugador.setRight(true);
-                break;
-            case KeyEvent.VK_S:
-                jugador.setDown(true);
                 break;
         }
     }
