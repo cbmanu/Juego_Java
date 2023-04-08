@@ -6,6 +6,7 @@ import Juego.Juego;
 import static Juego.Juego.SCALA;
 import Juego.PanelJuego;
 import Niveles.NivelManager;
+import Objetos.ObjectManager;
 import Utils.CargarGuardar;
 import static Utils.Constantes.Enviroment.*;
 
@@ -20,6 +21,12 @@ public class Playing extends State implements Statemethods {
 
     private Jugador jugador;
     private NivelManager nivelmanager;
+    private ObjectManager objectManager;
+    
+    private int xnvOffset;
+    private int leftBorde = (int)(0.2*Juego.JUEGO_WIDTH);
+    private int rightBorde = (int)(0.8*Juego.JUEGO_HEIGHT);
+    private int maxLvOffsetX;
     
     private JTextField name;
     private BufferedImage backgroundImg, objFondo, obj2Fondo;
@@ -39,10 +46,14 @@ public class Playing extends State implements Statemethods {
         obj2FondoPos = new int[8];
         for(int i=0; i<obj2FondoPos.length;i++)
             obj2FondoPos[i] = (int)(30*Juego.SCALA)+rnd.nextInt((int)(120*Juego.SCALA)) ; //empieza en 70 y dos da un valor random hasta 150
+    
+       
     }
 
     private void iniciClases() {
         nivelmanager = new NivelManager(juego);
+        objectManager = new ObjectManager(this);
+        
         jugador = new Jugador((50),(920-36-20-47),(int)(76*SCALA),(int)(76*SCALA)); 
         jugador.loadNvlData(nivelmanager.getNivelReciente().getNivelData());
     }
@@ -58,6 +69,7 @@ public class Playing extends State implements Statemethods {
     public void update() {
         name.setVisible(false);
         nivelmanager.update();
+        objectManager.update();
         jugador.update();
     }
 
@@ -66,13 +78,15 @@ public class Playing extends State implements Statemethods {
         //fondo
         g.drawImage(backgroundImg, 0, 0, Juego.JUEGO_WIDTH, Juego.JUEGO_HEIGHT, null);
         
+        
         //drawObjetosFondo(g);
         
         nivelmanager.draw(g);
         jugador.render(g);
+        objectManager.draw(g, xnvOffset);
     }
     
-    private void drawObjetosFondo(Graphics g) {
+  /*  private void drawObjetosFondo(Graphics g) {
         //dibujando objetos que acompanan el fondo 
         //ciclo para que aparezcan a lo largo de la pantalla 
         
@@ -83,7 +97,7 @@ public class Playing extends State implements Statemethods {
             g.drawImage(obj2Fondo, OBJ2_DELFONDO_WIDTH *4 *i, obj2FondoPos[i], OBJ2_DELFONDO_WIDTH, OBJ2_DELFONDO_WIDTH, null);
     
         
-    }
+    }*/
     
     @Override
     public void mousePressed(MouseEvent e) {
@@ -135,5 +149,9 @@ public class Playing extends State implements Statemethods {
         }
     }
 
+    //getters setters
+    public ObjectManager getObjectManager(){
+        return objectManager;
+    }
     
 }

@@ -3,10 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Ariani/Documents/NetBeansProjects/Juego_Java/Fireboy_Watergirl_juego/src/Objetos/ContenedorJuego.java</file>
             <file>file:/C:/Users/Ariani/Documents/NetBeansProjects/Juego_Java/Fireboy_Watergirl_juego/src/Utils/MetodosAyuda.java</file>
             <file>file:/C:/Users/Ariani/Documents/NetBeansProjects/Juego_Java/Fireboy_Watergirl_juego/src/Utils/CargarGuardar.java</file>
+            <file>file:/C:/Users/Ariani/Documents/NetBeansProjects/Juego_Java/Fireboy_Watergirl_juego/src/Objetos/ObjectManager.java</file>
+            <file>file:/C:/Users/Ariani/Documents/NetBeansProjects/Juego_Java/Fireboy_Watergirl_juego/src/Objetos/JuegoObjeto.java</file>
             <file>file:/C:/Users/Ariani/Documents/NetBeansProjects/Juego_Java/Fireboy_Watergirl_juego/src/Gamestates/Playing.java</file>
-            <file>file:/C:/Users/Ariani/Documents/NetBeansProjects/Juego_Java/Fireboy_Watergirl_juego/src/Gamestates/Menu.java</file>
+            <file>file:/C:/Users/Ariani/Documents/NetBeansProjects/Juego_Java/Fireboy_Watergirl_juego/src/Objetos/Gemas.java</file>
             <file>file:/C:/Users/Ariani/Documents/NetBeansProjects/Juego_Java/Fireboy_Watergirl_juego/src/Utils/Constantes.java</file>
         </group>
     </open-files>

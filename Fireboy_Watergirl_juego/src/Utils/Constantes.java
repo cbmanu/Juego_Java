@@ -4,6 +4,33 @@ package Utils;
 import Juego.Juego;
 
 public class Constantes {
+        //atributos
+        public static final int ANI_SPEED = 25;
+        
+        //para las gemas y algunos objetos 
+    public static class ConstantesObjeto{
+        public static final int FIRE_GEM =0;
+        public static final int WATER_GEM =1;
+        
+        public static final int FIRE_GEM_VALOR = 15;
+        public static final int WATER_GEM_VALOR = 15;
+        
+        public static final int GEM_WIDTH_DEFAULT = 16;
+        public static final int GEM_HEIGHT_DEFAULT = 24;
+        public static final int GEM_WIDTH =(int)(Juego.SCALA*GEM_WIDTH_DEFAULT);
+        public static final int GEM_HEIGHT =(int)(Juego.SCALA*GEM_HEIGHT_DEFAULT);
+        
+        public static int GetSpriteAmount(int object_type){
+            switch(object_type){
+                case FIRE_GEM:
+                case WATER_GEM:
+                    return 5;
+                
+            }
+            
+            return 1;
+        }
+    }
     
     //para las imagenes que acompanan el fondo
     public static class Enviroment{

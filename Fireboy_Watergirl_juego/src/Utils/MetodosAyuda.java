@@ -1,6 +1,11 @@
 package Utils;
 
+import Objetos.Gemas;
+import static Utils.Constantes.ConstantesObjeto.*;
+import java.awt.Color;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class MetodosAyuda {
     
@@ -20,8 +25,9 @@ public class MetodosAyuda {
     }
     
     private static boolean esSolido(float x, float y, int[][] nvData){
+        int maxWidth = nvData[0].length * Juego.Juego.TILES_SIZE; //not really necessary, usar luego Juego.Juego.JUEGO_WIDTH
         //chequea los limites 
-        if(x<0 || x>= Juego.Juego.JUEGO_WIDTH){
+        if(x<0 || x>= maxWidth){ //Juego.Juego.JUEGO_WIDTH
             return true;
         }
         if(y<0 || y>= Juego.Juego.JUEGO_HEIGHT){
@@ -75,5 +81,17 @@ public class MetodosAyuda {
                 return false; 
         }
         return true;
+    }
+    
+    public static ArrayList<Gemas> getGemas(BufferedImage img){
+        ArrayList<Gemas> lista = new ArrayList<>();
+        for(int j=0; j<img.getHeight(); j++ )
+            for(int i=0;i<img.getWidth();i++){
+                Color color = new Color(img.getRGB(i, j));
+                int valor = color.getBlue();
+                if(valor == FIRE_GEM || valor == WATER_GEM)
+                    lista.add(new Gemas(i*Juego.Juego.TILES_SIZE, j*Juego.Juego.TILES_SIZE, valor));     
+            }
+              return lista;  
     }
 }

@@ -27,11 +27,6 @@ public abstract class Entidad {
         hitbox = new Rectangle2D.Float(x,y,width, height);
     }
     
-  /*  protected void actualizarHitbox(){//only one class or the class that extends can use it
-        hitbox.x= (int)x;
-        hitbox.y= (int)y;
-    }*/
-    
     public Rectangle2D.Float getHitbox(){
         return hitbox;
     }
