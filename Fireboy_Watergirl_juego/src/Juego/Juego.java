@@ -34,6 +34,7 @@ public class Juego implements Runnable{
         iniciClases();
         paneljuego = new PanelJuego(this);
         ventanajuego = new VentanaJuego(paneljuego);
+        paneljuego.setFocusable(true);
         paneljuego.requestFocus();
         seleccion=new Seleccion(this,paneljuego);
         playing=new Playing(this,paneljuego);

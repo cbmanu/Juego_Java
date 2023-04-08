@@ -26,7 +26,6 @@ public class NivelManager {
         for(int j = 0; j<4; j++){
             for(int i=0; i<12;i++){
                 int index = j*12 + i;
-                //spriteNivel [index] = img.getSubimage(i*1248, j*856, 1248, 856);
                 spriteNivel [index] = img.getSubimage(i*32, j*32, 32, 32);
             }
         }
