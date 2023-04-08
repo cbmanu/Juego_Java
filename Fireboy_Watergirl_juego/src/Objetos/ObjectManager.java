@@ -22,8 +22,7 @@ public class ObjectManager {
         
         gemas[0] = new Gemas(400,300,0);
         gemas[1] = new Gemas(300,300,1);
-       
-        //gemas.add(new Gemas(400,300,1));
+
     }
     
     private void cargarImg() {

@@ -27,9 +27,9 @@ public class Menu extends State implements Statemethods {
     }
 
     private void loadButtons() {
-        buttons[0]=new MenuButtons(200,(int)(500*Juego.SCALA),2,Gamestate.SELECCION);
+        buttons[0]=new MenuButtons(1000,(int)(500*Juego.SCALA),2,Gamestate.SELECCION);
         buttons[1]=new MenuButtons(600,(int)(500*Juego.SCALA),0,Gamestate.INSTRUCCIONES);
-        buttons[2]=new MenuButtons(1000,(int)(500*Juego.SCALA),1,Gamestate.SALIR);
+        buttons[2]=new MenuButtons(200,(int)(500*Juego.SCALA),1,Gamestate.SALIR);
     }
 
     @Override

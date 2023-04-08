@@ -23,14 +23,6 @@ public class PanelJuego extends JComponent{
         addKeyListener(new TecladoInput(this));
         addMouseListener(mouseinput);
         addMouseMotionListener(mouseinput);
-        name=new JTextField("Coloca Tu Nombre");
-        name.setFont(new Font("Helvetica",Font.BOLD,30));
-        name.setHorizontalAlignment(SwingConstants.CENTER);
-        name.setForeground(Color.black);
-        name.setBounds(450,650,300,100);
-        name.setVisible(false);
-        this.add(name);
-
     }
     
     //size window 

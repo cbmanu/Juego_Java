@@ -39,7 +39,7 @@ public class Juego implements Runnable{
         ventanajuego = new VentanaJuego(paneljuego);
         paneljuego.setFocusable(true);
         paneljuego.requestFocus();
-        seleccion=new Seleccion(this,paneljuego);
+        seleccion=new Seleccion(this);
         playing=new Playing(this,paneljuego);
         InicioLoop();
     }
@@ -68,6 +68,7 @@ public class Juego implements Runnable{
                playing.update();
                break;
            case INSTRUCCIONES:
+               instrucciones.update();
                break;
            case SELECCION:
                seleccion.update();
@@ -91,6 +92,9 @@ public class Juego implements Runnable{
                 break;
             case SELECCION:
                 seleccion.draw(g);
+                break;
+            case INSTRUCCIONES:
+                instrucciones.draw(g);
             default:
                 break;
         }
@@ -149,6 +153,9 @@ public class Juego implements Runnable{
 
     public Menu getMenu(){
       return menu;
+    }
+    public PanelJuego getPanelJuego() {
+        return paneljuego;
     }
 
     public Playing getPlaying() {

@@ -41,7 +41,7 @@ public class Jugador extends Entidad{
     public void render(Graphics g) {
         g.drawImage(animaciones[jugadorAction][aniIndex], (int) (hitbox.x - (hitbox.getWidth() * 0.8)),
                 (int) (hitbox.y - (hitbox.getHeight() * 0.45)), (int) hitbox.getWidth() * 2, (int) (hitbox.getHeight() * 1.6), null); // 128//w h 90
-        //drawHitbox(g);
+        drawHitbox(g);
     }
     
   

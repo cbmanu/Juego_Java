@@ -25,6 +25,9 @@ public class TecladoInput implements KeyListener {
             case MENU:
                 paneljuego.getJuego().getMenu().keyReleased(ke);
                 break;
+            case SELECCION:
+                paneljuego.getJuego().getSeleccion().keyReleased(ke);
+                break;
             default:
                 break;
         }
@@ -36,11 +39,14 @@ public class TecladoInput implements KeyListener {
     @Override
     public void keyPressed(KeyEvent ke) {
         switch (Gamestate.state){
-            case PLAYING:
-                paneljuego.getJuego().getPlaying().keyPressed(ke);
-                break;
             case MENU:
                 paneljuego.getJuego().getMenu().keyPressed(ke);
+                break;
+            case SELECCION:
+                paneljuego.getJuego().getSeleccion().keyPressed(ke);
+                break;
+            case PLAYING:
+                paneljuego.getJuego().getPlaying().keyPressed(ke);
                 break;
             default:
                 break;

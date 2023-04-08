@@ -37,23 +37,18 @@ public class Playing extends State implements Statemethods {
     public Playing(Juego juego, PanelJuego panel) {
         super(juego);
         iniciClases();
-        name=panel.getJTextField();
         
         //fondo
         backgroundImg = CargarGuardar.GetSpriteAtlas(CargarGuardar.JUEGO_FONDO_IMAGEN);
-        
-        //objetos
-        //cargarIniciarNivel();
+        objFondo = CargarGuardar.GetSpriteAtlas(CargarGuardar.OBJ_DELFONDO_IMG);
+        obj2Fondo = CargarGuardar.GetSpriteAtlas(CargarGuardar.OBJ2_DELFONDO_IMG);
+        obj2FondoPos = new int[8];
+        for(int i=0; i<obj2FondoPos.length;i++)
+            obj2FondoPos[i] = (int)(30*Juego.SCALA)+rnd.nextInt((int)(120*Juego.SCALA)) ; //empieza en 70 y dos da un valor random hasta 150
+    
+       
     }
 
-    public void cargarOtroNivel(){
-        nivelmanager.cargarOtroNivel();
-    }
-    
-  /*  public void cargarIniciarNivel(){
-        objectManager.cargarObjeto(nivelmanager.getNivelReciente());
-    }*/
-    
     private void iniciClases() {
         nivelmanager = new NivelManager(juego);
         objectManager = new ObjectManager(this);
@@ -71,7 +66,6 @@ public class Playing extends State implements Statemethods {
 
     @Override
     public void update() {
-        name.setVisible(false);
         nivelmanager.update();
         objectManager.update();
         jugador.update();
@@ -82,11 +76,26 @@ public class Playing extends State implements Statemethods {
         //fondo
         g.drawImage(backgroundImg, 0, 0, Juego.JUEGO_WIDTH, Juego.JUEGO_HEIGHT, null);
         
+        
+        //drawObjetosFondo(g);
+        
         nivelmanager.draw(g);
         jugador.render(g);
         objectManager.draw(g, xnvOffset);
     }
     
+  /*  private void drawObjetosFondo(Graphics g) {
+        //dibujando objetos que acompanan el fondo 
+        //ciclo para que aparezcan a lo largo de la pantalla 
+        
+        for(int i =0; i<3; i++)
+            g.drawImage(objFondo, (i*OBJ_DELFONDO_WIDTH), (int)(204*Juego.SCALA), OBJ_DELFONDO_WIDTH, OBJ_DELFONDO_HEIGHT, null);
+        
+        for(int i=0; i<obj2FondoPos.length;i++)
+            g.drawImage(obj2Fondo, OBJ2_DELFONDO_WIDTH *4 *i, obj2FondoPos[i], OBJ2_DELFONDO_WIDTH, OBJ2_DELFONDO_WIDTH, null);
+    
+        
+    }*/
     
     @Override
     public void mousePressed(MouseEvent e) {

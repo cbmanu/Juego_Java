@@ -55,6 +55,14 @@ public class Constantes {
             public static final int B_HEIGHT=(int)(B_HEIGHT_DEFAULT + Juego.SCALA);
 
         }
+        public static class Seleccion{
+            public static final int WIDTH_DEFAULT=300;
+            public static final int HEIGHT_DEFAULT=350;
+            public static final int WIDTH=(int)(WIDTH_DEFAULT + Juego.SCALA);
+            public static final int HEIGHT=(int)(HEIGHT_DEFAULT + Juego.SCALA);
+
+
+        }
     }
     
     public static class Direcciones{
