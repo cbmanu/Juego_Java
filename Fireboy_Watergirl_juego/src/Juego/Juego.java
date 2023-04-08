@@ -4,6 +4,8 @@ import Gamestates.*;
 import Gamestates.Menu;
 import Gamestates.Seleccion;
 import Niveles.NivelManager;
+import Objetos.ObjectManager;
+import static Utils.Constantes.ConstantesObjeto.FIRE_GEM;
 
 import java.awt.*;
 
@@ -16,6 +18,7 @@ public class Juego implements Runnable{
     private final int FPS_SET = 120;
     private final int UPS_SET= 120;
     private Playing playing;
+    private ObjectManager objectmanager;
     private Menu menu;
     private Seleccion seleccion;
     private Instrucciones instrucciones;

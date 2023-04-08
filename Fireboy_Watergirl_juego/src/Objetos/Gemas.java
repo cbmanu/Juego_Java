@@ -1,5 +1,7 @@
 package Objetos;
 
+import java.awt.Graphics;
+
 public class Gemas extends JuegoObjeto{
     
     //constructor

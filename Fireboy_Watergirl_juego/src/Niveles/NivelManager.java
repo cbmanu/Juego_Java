@@ -17,6 +17,12 @@ public class NivelManager {
         
        importOutsideSprites();
        nivelUno = new Nivel(CargarGuardar.GetNivelData());
+       
+      
+    }
+    
+    public void cargarOtroNivel(){
+        
     }
     
     private void importOutsideSprites() {

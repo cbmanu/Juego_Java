@@ -1,6 +1,7 @@
 package Objetos;
 
 import Gamestates.Playing;
+import Niveles.Nivel;
 import Utils.CargarGuardar;
 import static Utils.Constantes.ConstantesObjeto.*;
 import java.awt.Graphics;
@@ -11,7 +12,7 @@ public class ObjectManager {
     //atributos
     private Playing playing;
     private BufferedImage[][] gemasImg;
-    private ArrayList<Gemas> gemas;
+    private Gemas[] gemas= new Gemas[2];//
     
     
     //constructor
@@ -19,12 +20,12 @@ public class ObjectManager {
         this.playing = playing;
         cargarImg();
         
-        gemas = new ArrayList<>();
-        
-        gemas.add(new Gemas(300,300,0));
-        gemas.add(new Gemas(400,300,1));
+        gemas[0] = new Gemas(400,300,0);
+        gemas[1] = new Gemas(300,300,1);
+       
+        //gemas.add(new Gemas(400,300,1));
     }
-
+    
     private void cargarImg() {
         BufferedImage gemasSprite = CargarGuardar.GetSpriteAtlas(CargarGuardar.GEMA_ATLAS);
         gemasImg = new BufferedImage[2][5];
@@ -47,6 +48,9 @@ public class ObjectManager {
         drawGemas(g,xnvOffset);
     }
 
+    
+    
+    
     private void drawGemas(Graphics g, int xnvOffset) {
         for(Gemas a : gemas){
             if(a.isActive()){
