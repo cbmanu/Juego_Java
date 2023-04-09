@@ -15,7 +15,7 @@ public class ObjectManager {
     private Playing playing;
     private BufferedImage[][] gemasImg;
     private Gemas[] gemas= new Gemas[16];//
-    int puntos =0;
+    int puntos =0, punto =0;
     
     
     //constructor
@@ -33,7 +33,7 @@ public class ObjectManager {
         for(Gemas p : gemas){
             if(p.isActive()){
                 if(hitbox.intersects(p.getHitbox())){
-                    p.setActive(false);
+                    //p.setActive(false);
                     aplicarEfectoJugador(p);
                     
                 }
@@ -44,14 +44,17 @@ public class ObjectManager {
     
     public void aplicarEfectoJugador(Gemas p ){//depdende del metodo anteriro este me lleva los puntajes 
         
-        if(p.getObjType() == FIRE_GEM){
-            puntos += FIRE_GEM_VALOR; //se supone da los puntos del fuego 
-            p.setActive(true);
+        if(p.getObjType() == WATER_GEM){
+            puntos += WATER_GEM_VALOR; //se supone da los puntos del agua
+            p.setActive(false);
             System.out.println("puntos gema roja "+puntos);
         }
-        else{
-             //esto lo agregue yo para que dibuje la gema de agua 
-            playing.getJugador().puntosGemas(WATER_GEM_VALOR); //esta en jugador el metodo
+        else if(p.getObjType() == FIRE_GEM){
+             //esto lo agregue yo para que dibuje la gema de fuego
+             p.setActive(true);
+             punto += FIRE_GEM_VALOR;
+             System.out.println("puntos gema azul "+puntos);
+            //playing.getJugador().puntosGemas(WATER_GEM_VALOR); //esta en jugador el metodo
         }
         
     }
@@ -77,7 +80,7 @@ public class ObjectManager {
     }
     
     public void update(){
-        System.out.println("gemas " +gemas);
+        //System.out.println("gemas " +gemas);
         
         for(Gemas a : gemas){
             //System.out.println("valor de a "+a);

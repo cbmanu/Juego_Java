@@ -26,6 +26,7 @@ public class Jugador extends Entidad{
     private float jumpSpeed = -2.25f* Juego.Juego.SCALA;
     private float fallSpeedAfterColision=0.5f * Juego.Juego.SCALA;
     private boolean aire = false;
+    int puntos =0;
     
     //constructor
     public Jugador(float x, float y, int width, int height, Playing playing) {
@@ -164,10 +165,10 @@ public class Jugador extends Entidad{
     
     //para las gemas en objectmanager
       public void puntosGemas(int valor) {
-          int puntos =0;
+          
           puntos +=valor;
           
-          System.out.println("recolecto gema azul " + puntos);
+          //System.out.println("recolecto gema azul " + puntos);
       
       }
     

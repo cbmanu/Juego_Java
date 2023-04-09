@@ -88,20 +88,7 @@ public class Playing extends State implements Statemethods {
         jugador.render(g);
         objectManager.draw(g, xnvOffset);
     }
-    
-  /*  private void drawObjetosFondo(Graphics g) {
-        //dibujando objetos que acompanan el fondo 
-        //ciclo para que aparezcan a lo largo de la pantalla 
-        
-        for(int i =0; i<3; i++)
-            g.drawImage(objFondo, (i*OBJ_DELFONDO_WIDTH), (int)(204*Juego.SCALA), OBJ_DELFONDO_WIDTH, OBJ_DELFONDO_HEIGHT, null);
-        
-        for(int i=0; i<obj2FondoPos.length;i++)
-            g.drawImage(obj2Fondo, OBJ2_DELFONDO_WIDTH *4 *i, obj2FondoPos[i], OBJ2_DELFONDO_WIDTH, OBJ2_DELFONDO_WIDTH, null);
-    
-        
-    }*/
-    
+
     @Override
     public void mousePressed(MouseEvent e) {
 
