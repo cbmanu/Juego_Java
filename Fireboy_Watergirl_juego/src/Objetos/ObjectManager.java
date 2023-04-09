@@ -5,6 +5,8 @@ import Niveles.Nivel;
 import Utils.CargarGuardar;
 import static Utils.Constantes.ConstantesObjeto.*;
 import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -24,6 +26,37 @@ public class ObjectManager {
         gemas[1] = new Gemas(300,300,1);
         
         System.out.println("gemas " +gemas[0]+" j "+ gemas[1]);
+    }
+    
+    public void checkObjetoTouch(Rectangle.Float hitbox){ //detecta si ha chocado, esta conectado con aplicarEfectoJugador
+        for(Gemas p : gemas){
+            if(p.isActive()){
+                if(hitbox.intersects(p.getHitbox())){
+                    p.setActive(false);
+                    aplicarEfectoJugador(p);
+                    
+                }
+            }
+        }
+        
+    }
+    
+    public void aplicarEfectoJugador(Gemas p ){//depdende del metodo anteriro este me lleva los puntajes 
+        int puntos =0;
+        if(p.getObjType() == FIRE_GEM){
+            puntos += FIRE_GEM_VALOR; //se supone da los puntos del fuego 
+            p.setActive(true);
+            System.out.println("puntos gema roja "+puntos);
+        }
+        else{
+             //esto lo agregue yo para que dibuje la gema de agua 
+            playing.getJugador().puntosGemas(WATER_GEM_VALOR); //esta en jugador el metodo
+        }
+        
+    }
+    
+    public void checkObjetoHit(Rectangle.Float colecciona){//esto sera luego para los botones de los elevadores 
+        
     }
     
      //
@@ -46,7 +79,7 @@ public class ObjectManager {
         System.out.println("gemas " +gemas);
         
         for(Gemas a : gemas){
-            System.out.println("valor de a "+a);
+            //System.out.println("valor de a "+a);
             if(a.isActive())
                 a.update();
         }

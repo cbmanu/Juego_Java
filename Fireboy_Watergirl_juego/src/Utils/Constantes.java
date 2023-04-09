@@ -12,7 +12,7 @@ public class Constantes {
         public static final int FIRE_GEM =0;
         public static final int WATER_GEM =1;
         
-        public static final int FIRE_GEM_VALOR = 15;
+        public static final int FIRE_GEM_VALOR = 14;
         public static final int WATER_GEM_VALOR = 15;
         
         public static final int GEM_WIDTH_DEFAULT = 16;

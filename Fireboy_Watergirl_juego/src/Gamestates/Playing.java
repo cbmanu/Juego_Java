@@ -14,6 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
@@ -58,7 +59,7 @@ public class Playing extends State implements Statemethods {
         nivelmanager = new NivelManager(juego);
         objectManager = new ObjectManager(this);
         
-        jugador = new Jugador((50),(920-36-20-47),(int)(76*SCALA),(int)(76*SCALA)); 
+        jugador = new Jugador((50),(920-36-20-47),(int)(76*SCALA),(int)(76*SCALA),this); //lo modifique por el constructor de jugador
         jugador.loadNvlData(nivelmanager.getNivelReciente().getNivelData());
     }
     public void windowFocuseLost(){
@@ -141,6 +142,11 @@ public class Playing extends State implements Statemethods {
     //getters setters
     public ObjectManager getObjectManager(){
         return objectManager;
+    }
+    
+    //esto es para el jugador
+    public void checkGemaTouched(Rectangle2D.Float hitbox){
+        objectManager.checkObjetoTouch(hitbox); //revisar si es el mismo touch
     }
     
 }

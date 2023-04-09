@@ -1,4 +1,5 @@
 package Entidades;
+import Gamestates.Playing;
 import Utils.CargarGuardar;
 import static Utils.MetodosAyuda.*;
 import static Utils.Constantes.ConstantJugador.*;
@@ -8,6 +9,7 @@ import java.awt.image.BufferedImage;
 
 public class Jugador extends Entidad{
     //atributos
+    private Playing playing;
     private BufferedImage[][] animaciones;
     private int aniTick, aniIndex, aniSpeed = 15;
     private int jugadorAction = CORRER;
@@ -26,16 +28,26 @@ public class Jugador extends Entidad{
     private boolean aire = false;
     
     //constructor
-    public Jugador(float x, float y, int width, int height) {
+    public Jugador(float x, float y, int width, int height, Playing playing) {
         super(x, y,width, height);
+        this.playing = playing;//
         cargaAnimaciones();
         iniHitbox(x, y,38*Juego.Juego.SCALA, 50*Juego.Juego.SCALA);
     }
     
     public void update(){
         actualizarPosicion();
+        if(movimiento)//esto es para el check del object manager
+            checkObjetoTouched(); //esto esta aqui 
+        
+        
         actualizarAniTick();
         setAnimacion();
+    }
+    
+    //para la colicion de gemas que viene del objectmanager
+    public void checkObjetoTouched(){
+        playing.checkGemaTouched(hitbox);//esto viene del playing 
     }
     
     public void render(Graphics g) {
@@ -150,6 +162,15 @@ public class Jugador extends Entidad{
         }
        }
     
+    //para las gemas en objectmanager
+      public void puntosGemas(int valor) {
+          int puntos =0;
+          puntos +=valor;
+          
+          System.out.println("recolecto gema azul " + puntos);
+      
+      }
+    
     private void cargaAnimaciones() {
 
          BufferedImage img = CargarGuardar.GetSpriteAtlas(CargarGuardar.JUGADOR_ATLAS);
@@ -215,4 +236,6 @@ public class Jugador extends Entidad{
     public void setJump(boolean jump){
         this.jump =jump;
     }
+
+  
 }

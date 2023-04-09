@@ -9,7 +9,7 @@ public class ContenedorJuego extends JuegoObjeto{
     }
     
     //esta clase es para las cajas que se deben arrastrar
-    //no esta terminada
+    //no esta terminada observar esto para los puentes elevadores
     public void update(){
         if(doAnimation){
             actualizarAniTick();
