@@ -89,11 +89,11 @@ public class MetodosAyuda {
       
         for(int j=0; j<img.getHeight(); j++ ){
             for(int i=0;i<img.getWidth();i++){
-                System.out.println(" img H "+img.getHeight()+" img W "+ img.getWidth());
+                //System.out.println(" img H "+img.getHeight()+" img W "+ img.getWidth());
                 
                 Color color = new Color(img.getRGB(i, j));
                 int valor = color.getBlue();
-                System.out.println(" valor1 gema "+valor);
+                //System.out.println(" valor1 gema "+valor);
                 if(valor == FIRE_GEM || valor == WATER_GEM){
                     lista[contador] = new Gemas(i*Juego.Juego.TILES_SIZE, j*Juego.Juego.TILES_SIZE, valor); 
                     contador++;

@@ -15,6 +15,7 @@ public class ObjectManager {
     private Playing playing;
     private BufferedImage[][] gemasImg;
     private Gemas[] gemas= new Gemas[16];//
+    int puntos =0;
     
     
     //constructor
@@ -42,7 +43,7 @@ public class ObjectManager {
     }
     
     public void aplicarEfectoJugador(Gemas p ){//depdende del metodo anteriro este me lleva los puntajes 
-        int puntos =0;
+        
         if(p.getObjType() == FIRE_GEM){
             puntos += FIRE_GEM_VALOR; //se supone da los puntos del fuego 
             p.setActive(true);
