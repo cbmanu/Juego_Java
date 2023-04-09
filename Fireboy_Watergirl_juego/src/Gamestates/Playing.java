@@ -12,6 +12,8 @@ import static Utils.Constantes.Enviroment.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
@@ -20,60 +22,68 @@ import java.util.Random;
 
 public class Playing extends State implements Statemethods {
 
-    private Jugador jugador;
+    private Jugador fireboy;
+    private Jugador watergirl;
+
     private NivelManager nivelmanager;
     private ObjectManager objectManager;
-    
     private int xnvOffset;
     private int leftBorde = (int)(0.2*Juego.JUEGO_WIDTH);
     private int rightBorde = (int)(0.8*Juego.JUEGO_HEIGHT);
     private int maxLvOffsetX;
     
-    private JTextField name;
+    private int selected=0;
     private BufferedImage backgroundImg, objFondo, obj2Fondo;
     private int[] obj2FondoPos;
+
     private Random rnd = new Random();
     
     //constructor 
-    public Playing(Juego juego, PanelJuego panel) {
+    public Playing(Juego juego) {
         super(juego);
         iniciClases();
-        
+        fireboy = new Jugador((50),(920-36-20-47),(int)(76*SCALA),(int)(76*SCALA),0,this);
+        watergirl = new Jugador((100),(920-36-20-47),(int)(76*SCALA),(int)(76*SCALA),1,this);
+        fireboy.loadNvlData(nivelmanager.getNivelReciente().getNivelData());
+        watergirl.loadNvlData(nivelmanager.getNivelReciente().getNivelData());
         //fondo
         backgroundImg = CargarGuardar.GetSpriteAtlas(CargarGuardar.JUEGO_FONDO_IMAGEN);
-        
-        //objetos
         cargarIniciarNivel();
     }
-    ///
     public void cargarOtroNivel(){
         nivelmanager.cargarOtroNivel();
     }
-    
     public void cargarIniciarNivel(){//called to load the objects
         objectManager.cargarObjetos(nivelmanager.getNivelReciente());
     }
-    
+
     private void iniciClases() {
         nivelmanager = new NivelManager(juego);
         objectManager = new ObjectManager(this);
         
-        jugador = new Jugador((50),(920-36-20-47),(int)(76*SCALA),(int)(76*SCALA),this); //lo modifique por el constructor de jugador
-        jugador.loadNvlData(nivelmanager.getNivelReciente().getNivelData());
-    }
-    public void windowFocuseLost(){
-        jugador.resetDirBoolean();
-    }
 
-    public Jugador getJugador(){
-        return jugador;
+    }
+//    public void windowFocuseLost(){
+//        jugador.resetDirBoolean();
+//    }
+
+//    public Jugador getJugador(){
+//        return jugador;
+//    }
+    public void calcularPersonaje(Graphics g){
+        if(juego.getSeleccion().getSelected()==0){
+            fireboy.render(g);
+        }else {
+            watergirl.render(g);
+        }
     }
 
     @Override
     public void update() {
         nivelmanager.update();
         objectManager.update();
-        jugador.update();
+        fireboy.update();
+        watergirl.update();
     }
 
     @Override
@@ -83,9 +93,9 @@ public class Playing extends State implements Statemethods {
         
         
         //drawObjetosFondo(g);
-        
+        calcularPersonaje(g);
+
         nivelmanager.draw(g);
-        jugador.render(g);
         objectManager.draw(g, xnvOffset);
     }
     
@@ -101,6 +111,8 @@ public class Playing extends State implements Statemethods {
     
         
     }*/
+
+
     
     @Override
     public void mousePressed(MouseEvent e) {
@@ -125,13 +137,22 @@ public class Playing extends State implements Statemethods {
     public void keyReleased(KeyEvent e) {
         switch(e.getKeyCode()){
             case KeyEvent.VK_W:   //asegurando que con cada tecla se acabe el movimiento
-                jugador.setJump(false); //salto 
+                watergirl.setJump(false); //salto
                 break;
             case KeyEvent.VK_A:
-                jugador.setLeft(false);
+                watergirl.setLeft(false);
                 break;
             case KeyEvent.VK_D:
-                jugador.setRight(false);
+                watergirl.setRight(false);
+                break;
+            case KeyEvent.VK_UP:
+                fireboy.setJump(false);
+                break;
+            case KeyEvent.VK_LEFT:
+                fireboy.setLeft(false);
+                break;
+            case KeyEvent.VK_RIGHT:
+                fireboy.setRight(false);
                 break;
         }
 
@@ -140,14 +161,23 @@ public class Playing extends State implements Statemethods {
     @Override
     public void keyPressed(KeyEvent e) {
         switch(e.getKeyCode()){
-            case KeyEvent.VK_W:   
-                jugador.setJump(true); //salto
+            case KeyEvent.VK_W:
+                watergirl.setJump(true); //salto
                 break;
             case KeyEvent.VK_A:
-                jugador.setLeft(true);
+                watergirl.setLeft(true);
                 break;
             case KeyEvent.VK_D:
-                jugador.setRight(true);
+                watergirl.setRight(true);
+                break;
+            case KeyEvent.VK_UP:
+                fireboy.setJump(true);
+                break;
+            case KeyEvent.VK_LEFT:
+                fireboy.setLeft(true);
+                break;
+            case KeyEvent.VK_RIGHT:
+                fireboy.setRight(true);
                 break;
         }
     }
@@ -156,7 +186,7 @@ public class Playing extends State implements Statemethods {
     public ObjectManager getObjectManager(){
         return objectManager;
     }
-    
+
     //esto es para el jugador
     public void checkGemaTouched(Rectangle2D.Float hitbox){
         objectManager.checkObjetoTouch(hitbox); //revisar si es el mismo touch

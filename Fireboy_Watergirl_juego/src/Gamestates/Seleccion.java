@@ -2,7 +2,6 @@ package Gamestates;
 
 import Inputs.Statemethods;
 import Juego.Juego;
-import Juego.VentanaJuego;
 import Juego.PanelJuego;
 import Utils.CargarGuardar;
 import ui.Characters;
@@ -11,16 +10,16 @@ import ui.MenuButtons;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
 public class Seleccion extends State implements Statemethods {
     private MenuButtons[] buttons=new MenuButtons[2];
     private Characters[] character=new Characters[2];
     private PanelJuego panel=juego.getPanelJuego();
+    private JLabel time=juego.getPanelJuego().getTime();
+    public int selected=1;
+    private int timeSecs=0;
 
     private BufferedImage backgroundImg;
     public Seleccion(Juego juego){
@@ -36,12 +35,12 @@ public class Seleccion extends State implements Statemethods {
         buttons[1]=new MenuButtons(950,(int)(500*Juego.SCALA),2,Gamestate.PLAYING);
         character[0]=new Characters(300,150,0);
         character[1]=new Characters(900,150,1);
-
-
     }
 
     @Override
     public void update() {
+            panel.getNameLabel().setVisible(true);
+            panel.getNameField().setVisible(true);
         for (MenuButtons mb : buttons) {
             mb.update();
         }
@@ -88,14 +87,49 @@ public class Seleccion extends State implements Statemethods {
         }
 
     }
+    Timer timer = new Timer(1000,new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            if(timeSecs%60<10){
+                String seconds=timeSecs/60+":"+"0"+timeSecs%60;
+                time.setText(seconds);
+            }else {
+                String seconds=timeSecs/60+":"+timeSecs%60;
+                time.setText(seconds);
+            }
+            timeSecs++;
+        }
+    });
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        for (MenuButtons mb : buttons) {
-            if (isIn(e, mb)) {
-                if(mb.isMousePressed()){
-                    mb.applyGamestate();
-                    break;
+        for (int i = 0; i <buttons.length; i++) {
+            if (isIn(e, buttons[i])) {
+                if(buttons[0].isMousePressed()){
+                    buttons[0].applyGamestate();
+                    panel.getNameLabel().setVisible(false);
+                    panel.getNameField().setVisible(false);
+                }
+                if(buttons[1].isMousePressed()){
+                    if(panel.getNameField().getText().equals("")){
+                        System.out.println("no hay nombre");
+                    } else if(!panel.getNameField().getText().equals("")&&(character[0].isMousePressed()||character[1].isMousePressed())){
+                        buttons[i].applyGamestate();
+                        if(Gamestate.state==Gamestate.PLAYING){
+                            if(character[0].isMousePressed()){
+                                selected=0;
+                            }else {
+                                selected=1;
+                            }
+                            panel.getNameWindow().setText("Jugador: "+panel.getNameField().getText());
+                            panel.remove(panel.getNameLabel());
+                            panel.remove(panel.getNameField());
+                            panel.getTime().setVisible(true);
+                            timer.start();
+                        }
+                        break;
+                    }else {
+                        System.out.println("No hay personaje seleccionado");
+                    }
                 }
             }
         }
@@ -141,6 +175,10 @@ public class Seleccion extends State implements Statemethods {
 
     @Override
     public void keyPressed(KeyEvent e) {
+
+    }
+    public int getSelected(){
+        return selected;
     }
 
 }

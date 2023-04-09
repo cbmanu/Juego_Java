@@ -83,6 +83,9 @@ public class MetodosAyuda {
         }
         return true;
     }
+//    public static boolean muere(Rectangle2D.Float hitbox, int[][]){
+//        if()
+//    }
     
     ///
     public static Gemas[] getGemas(BufferedImage img){
