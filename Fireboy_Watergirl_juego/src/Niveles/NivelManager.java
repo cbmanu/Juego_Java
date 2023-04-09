@@ -2,6 +2,7 @@ package Niveles;
 import Juego.*;
 import static Juego.Juego.TILES_SIZE;
 import Utils.CargarGuardar;
+import static Utils.CargarGuardar.NIVEL_ATLAS;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -9,24 +10,23 @@ public class NivelManager {
     //atributos
     private Juego juego;
     private BufferedImage[] spriteNivel;
-    private Nivel nivelUno;
+    private Nivel nivelUno, nivels;
     
     //constructor
     public NivelManager(Juego juego){
         this.juego = juego;
         
        importOutsideSprites();
-       nivelUno = new Nivel(CargarGuardar.GetNivelData());
-       
+       nivelUno = new Nivel(CargarGuardar.GetNivelData(), CargarGuardar.GetSpriteAtlas(CargarGuardar.NIVEL_ONE_DATA));//revisar esto
       
     }
-    
+    //
     public void cargarOtroNivel(){
-        
+        juego.getPlaying().getObjectManager().cargarObjetos(nivelUno);
     }
     
     private void importOutsideSprites() {
-        BufferedImage img = CargarGuardar.GetSpriteAtlas(CargarGuardar.NIVEL_ATLAS);
+        BufferedImage img = CargarGuardar.GetSpriteAtlas(CargarGuardar.NIVEL_ATLAS);//
         
         spriteNivel = new BufferedImage[48]; //10//48
         for(int j = 0; j<4; j++){

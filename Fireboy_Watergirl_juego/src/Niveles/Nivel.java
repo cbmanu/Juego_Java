@@ -9,21 +9,27 @@ import java.util.ArrayList;
 public class Nivel {
     //atributos 
     private BufferedImage img;
+    private MetodosAyuda ayuda;
     private int[][] nvData;
-    private ArrayList<Gemas> gemas;
+    //private ArrayList<Gemas> gema;
+    private Gemas[] gemas = new Gemas[16];
     
     
     //constructor 
-    public Nivel(int[][] nvData){
+    public Nivel(int[][] nvData, BufferedImage img){
         this.nvData = nvData;
+        this.img = img;
+        crearGemas();
         
+        //gemas[0] = new Gemas(400,300,0);
+        //gemas[1] = new Gemas(300,300,1);
     }
-    public Nivel(BufferedImage img){
+    public Nivel(BufferedImage img){//constructor 
         this.img = img;
         crearGemas();
     }
     
-     private void crearGemas() {
+     public void crearGemas() {
         gemas = MetodosAyuda.getGemas(img);
      }
     
@@ -35,9 +41,11 @@ public class Nivel {
     public int[][] getNivelData(){
         return nvData;
     }
-
+    
+    
    //getters setters
-    public ArrayList<Gemas> getGemas(){
+    public Gemas[] getGemas(){
+       // System.out.println("getgemas "+gemas);
         return gemas;
     }
 }

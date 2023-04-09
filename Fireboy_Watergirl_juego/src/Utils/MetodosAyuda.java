@@ -5,7 +5,6 @@ import static Utils.Constantes.ConstantesObjeto.*;
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 public class MetodosAyuda {
     
@@ -83,15 +82,23 @@ public class MetodosAyuda {
         return true;
     }
     
-    public static ArrayList<Gemas> getGemas(BufferedImage img){
-        ArrayList<Gemas> lista = new ArrayList<>();
-        for(int j=0; j<img.getHeight(); j++ )
+    ///
+    public static Gemas[] getGemas(BufferedImage img){
+        Gemas[] lista = new Gemas[16];
+        int contador =0;
+      
+        for(int j=0; j<img.getHeight(); j++ ){
             for(int i=0;i<img.getWidth();i++){
+                System.out.println(" img H "+img.getHeight()+" img W "+ img.getWidth());
+                
                 Color color = new Color(img.getRGB(i, j));
                 int valor = color.getBlue();
-                if(valor == FIRE_GEM || valor == WATER_GEM)
-                    lista.add(new Gemas(i*Juego.Juego.TILES_SIZE, j*Juego.Juego.TILES_SIZE, valor));     
-            }
+                System.out.println(" valor1 gema "+valor);
+                if(valor == FIRE_GEM || valor == WATER_GEM){
+                    lista[contador] = new Gemas(i*Juego.Juego.TILES_SIZE, j*Juego.Juego.TILES_SIZE, valor); 
+                    contador++;
+                } 
+            }}
               return lista;  
     }
 }

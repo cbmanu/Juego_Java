@@ -43,16 +43,16 @@ public class Playing extends State implements Statemethods {
         backgroundImg = CargarGuardar.GetSpriteAtlas(CargarGuardar.JUEGO_FONDO_IMAGEN);
         
         //objetos
-        //cargarIniciarNivel();
+        cargarIniciarNivel();
     }
-
+    ///
     public void cargarOtroNivel(){
         nivelmanager.cargarOtroNivel();
     }
     
-  /*  public void cargarIniciarNivel(){
-        objectManager.cargarObjeto(nivelmanager.getNivelReciente());
-    }*/
+    public void cargarIniciarNivel(){//called to load the objects
+        objectManager.cargarObjetos(nivelmanager.getNivelReciente());
+    }
     
     private void iniciClases() {
         nivelmanager = new NivelManager(juego);

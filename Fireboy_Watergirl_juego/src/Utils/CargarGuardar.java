@@ -22,6 +22,9 @@ public class CargarGuardar {
     public static final String OBJ_DELFONDO_IMG="big_clouds.png";
     public static final String OBJ2_DELFONDO_IMG="small_cloud.png";
     
+    //pantalla paso de nivel
+    public static final String COMPLETADO_IMG="completed_sprite.png";
+    
     //objetos del nivel
     public static final String GEMA_ATLAS="gemas_sprites.png";
 

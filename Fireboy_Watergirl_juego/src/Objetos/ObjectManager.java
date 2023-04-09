@@ -12,7 +12,7 @@ public class ObjectManager {
     //atributos
     private Playing playing;
     private BufferedImage[][] gemasImg;
-    private Gemas[] gemas= new Gemas[2];//
+    private Gemas[] gemas= new Gemas[16];//
     
     
     //constructor
@@ -22,7 +22,13 @@ public class ObjectManager {
         
         gemas[0] = new Gemas(400,300,0);
         gemas[1] = new Gemas(300,300,1);
-
+        
+        System.out.println("gemas " +gemas[0]+" j "+ gemas[1]);
+    }
+    
+     //
+    public void cargarObjetos(Nivel nivelUno){
+        gemas = nivelUno.getGemas();
     }
     
     private void cargarImg() {
@@ -37,7 +43,10 @@ public class ObjectManager {
     }
     
     public void update(){
+        System.out.println("gemas " +gemas);
+        
         for(Gemas a : gemas){
+            System.out.println("valor de a "+a);
             if(a.isActive())
                 a.update();
         }
@@ -48,7 +57,7 @@ public class ObjectManager {
     }
 
     
-    
+   
     
     private void drawGemas(Graphics g, int xnvOffset) {
         for(Gemas a : gemas){
