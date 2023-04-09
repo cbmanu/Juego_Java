@@ -7,8 +7,8 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 public class MetodosAyuda {
-    
-    //metodos 
+
+    //metodos
     public static boolean puedeMover(float x, float y, float width, float height, int[][] nvData){
         
         //puntos de choque, primero se tomaran las esquinas en diagonal izquierda arriba/derecha abajo
@@ -16,10 +16,12 @@ public class MetodosAyuda {
             if(!esSolido(x+width, y+height, nvData))   //esquina inferior derecha superior izquierda
                 if(!esSolido(x+width, y, nvData))      //esquina superior derecha
                     if(!esSolido(x, y+height, nvData)) //esquina inferior izquierda
-                        //if(!esSolido(x, (y+height)/2, nvData))//
+                        if(!esSolido(x, y+height/2, nvData))
+                            if(!esSolido(x+width, y+height/2, nvData)) //esquina inferior izquierda
+                                //if(!esSolido(x, (y+height)/2, nvData))//
                            // if(!esSolido(x+width, (y+height)/2, nvData))//
                                 return true;
-        
+
         return false;
     }
     

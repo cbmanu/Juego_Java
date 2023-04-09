@@ -13,8 +13,7 @@ public class CargarGuardar {
     public static final String NIVEL_ONE_DATA = "level_o_data.png";
     public static final String MENU_BUTTONS="buttons.png";
     public static final String MENU_BACKGROUND="menuBackground.png";
-    public static final String FIREBOY_IMAGE="fireboy.jpg";
-    public static final String WATERGIRL_IMAGE="watergirl.jpg";
+    public static final String FIREBOY_AND_WATERGIRL="FIREBOY_AND_WATERGIRL.png";
     public static final String PRESENTATION_IMAGE="presentation.png";
     
     //fondo
@@ -27,6 +26,13 @@ public class CargarGuardar {
     
     //objetos del nivel
     public static final String GEMA_ATLAS="gemas_sprites.png";
+
+    public static final String WASD="wasd.png";
+    public static final String ARROWS="arrows.png";
+
+
+
+
 
     //metodo trycatch 
     public static BufferedImage GetSpriteAtlas(String nombreArch){
@@ -49,10 +55,8 @@ public class CargarGuardar {
     
     //dibujo/diseño del nivel
     public static int[][] GetNivelData(){
-        
+        int[][] nvData= new int[Juego.TILES_IN_HEIGHT][Juego.TILES_IN_WIDTH];
         BufferedImage img = GetSpriteAtlas(NIVEL_ONE_DATA);
-        //int[][] nvData= new int[Juego.TILES_IN_HEIGHT][Juego.TILES_IN_WIDTH];
-        int[][] nvData= new int[img.getHeight()][img.getWidth()];
         
         for(int j = 0;j<img.getHeight(); j++)
             for(int i =0; i<img.getWidth(); i++){

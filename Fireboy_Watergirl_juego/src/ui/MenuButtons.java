@@ -3,6 +3,8 @@ package ui;
 import Gamestates.Gamestate;
 import Gamestates.State;
 import static Utils.Constantes.UI.MenuButtons.*;
+
+import Juego.PanelJuego;
 import Utils.CargarGuardar;
 
 import java.awt.*;
@@ -62,6 +64,7 @@ public class MenuButtons {
             index=1;
         }
     }
+
     public Rectangle getBounds(){
         return bounds;
     }
