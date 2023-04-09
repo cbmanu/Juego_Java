@@ -23,10 +23,10 @@ public class ObjectManager {
         this.playing = playing;
         cargarImg();
         
-        gemas[0] = new Gemas(400,300,0);
-        gemas[1] = new Gemas(300,300,1);
+        //gemas[0] = new Gemas(400,300,0);
+        //gemas[1] = new Gemas(300,300,1);
         
-        System.out.println("gemas " +gemas[0]+" j "+ gemas[1]);
+        //System.out.println("gemas " +gemas[0]+" j "+ gemas[1]);
     }
     
     public void checkObjetoTouch(Rectangle.Float hitbox){ //detecta si ha chocado, esta conectado con aplicarEfectoJugador

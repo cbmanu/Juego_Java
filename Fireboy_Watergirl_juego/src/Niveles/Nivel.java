@@ -24,7 +24,7 @@ public class Nivel {
         //gemas[0] = new Gemas(400,300,0);
         //gemas[1] = new Gemas(300,300,1);
     }
-    public Nivel(BufferedImage img){//constructor 
+    public Nivel(BufferedImage img){//constructor no necesito por ahora 
         this.img = img;
         crearGemas();
     }

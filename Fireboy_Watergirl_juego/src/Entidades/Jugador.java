@@ -163,14 +163,6 @@ public class Jugador extends Entidad{
         }
        }
     
-    //para las gemas en objectmanager
-      public void puntosGemas(int valor) {
-          
-          puntos +=valor;
-          
-          //System.out.println("recolecto gema azul " + puntos);
-      
-      }
     
     private void cargaAnimaciones() {
 
