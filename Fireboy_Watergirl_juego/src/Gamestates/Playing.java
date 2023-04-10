@@ -192,6 +192,7 @@ public class Playing extends State implements Statemethods {
     }
 
     public void checkLavaTouched(Jugador p) {//esta en jugador
+        //objectManager.checkLavaTouch(p);
         objectManager.checkLavaTouch(p);
     }
 

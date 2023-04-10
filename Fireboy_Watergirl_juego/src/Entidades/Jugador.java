@@ -282,11 +282,4 @@ public class Jugador extends Entidad{
         this.jump =jump;
     }
 
-    
-
-    
-
-    
-
-
 }
