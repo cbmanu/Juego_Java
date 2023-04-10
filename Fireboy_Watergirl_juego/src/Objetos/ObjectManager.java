@@ -21,7 +21,8 @@ public class ObjectManager {
     private Gemas[] gemas= new Gemas[16];//
     private Agua[] agua = new Agua[3];
     private Lava[] lava = new Lava[3];
-    private BufferedImage lavaImg, aguaImg;
+    private PuertaFuego puertaFuego; //check this is  from metodos ayuda and level
+    private BufferedImage lavaImg, aguaImg, puertaFimg;
     public int puntos =0, punto =0;
 
 
@@ -43,6 +44,7 @@ public class ObjectManager {
         plataforma=nivelUno.getPlataforma();
         lava = nivelUno.getLava();
         agua = nivelUno.getAgua();
+        puertaFuego =  nivelUno.getPuertaF();
     }
 
     private void cargarImg() {
@@ -58,6 +60,8 @@ public class ObjectManager {
         lavaImg = CargarGuardar.GetSpriteAtlas(CargarGuardar.LAVA_ATLAS);
         //imagenes de agua
         aguaImg = CargarGuardar.GetSpriteAtlas(CargarGuardar.AGUA_ATLAS);
+        //puertas
+        puertaFimg = CargarGuardar.GetSpriteAtlas(CargarGuardar.PUERTAF_ATLAS);
     }
 
     public void update(){
@@ -75,7 +79,14 @@ public class ObjectManager {
         drawPlataforma(g);
         drawLava(g,xnvOffset);
         drawAgua(g,xnvOffset);
+        drawPuertaFuego(g,xnvOffset);
     }
+    
+    private void drawPuertaFuego(Graphics g, int xnvOffset) {///
+        g.drawImage(puertaFimg, (int)(puertaFuego.getHitbox().x - xnvOffset),
+                    (int)(puertaFuego.getHitbox().y ), PUERTAF_WIDTH, PUERTAF_HEIGHT, null);
+    }
+    
     private void drawLava(Graphics g, int xnvOffset) {
         for(Lava l: lava){
             //System.out.println("imagen lava " +xnvOffset);
@@ -148,9 +159,18 @@ public class ObjectManager {
                 }
             }
         }
+    }
+    
+    public void checkPuertaTouch(Rectangle.Float hitbox,int selected,Jugador jugador){//puerta fuego
+        if(selected==1){
+                if(hitbox.intersects(puertaFuego.getHitbox())){
+                   
+                    jugador.ganar();
+                }
+            }
 
     }
-
+    
     public void aplicarEfectoJugador(Gemas p ,int selected){//depdende del metodo anteriro este me lleva los puntajes
         if(p.getObjType() == 0&& selected==0){
             new Sound();
