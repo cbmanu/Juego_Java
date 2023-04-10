@@ -1,5 +1,6 @@
 package Objetos;
 
+import Entidades.Jugador;
 import Gamestates.Playing;
 import Niveles.Nivel;
 import Utils.CargarGuardar;
@@ -22,19 +23,14 @@ public class ObjectManager {
     public ObjectManager(Playing playing){
         this.playing = playing;
         cargarImg();
-
-        gemas[0] = new Gemas(400,300,0);
-        gemas[1] = new Gemas(300,300,1);
-
-        System.out.println("gemas " +gemas[0]+" j "+ gemas[1]);
     }
 
-    public void checkObjetoTouch(Rectangle.Float hitbox){ //detecta si ha chocado, esta conectado con aplicarEfectoJugador
+    public void checkObjetoTouch(Rectangle.Float hitbox,int selected){ //detecta si ha chocado, esta conectado con aplicarEfectoJugador
         for(Gemas p : gemas){
             if(p.isActive()){
                 if(hitbox.intersects(p.getHitbox())){
                     //p.setActive(false);
-                    aplicarEfectoJugador(p);
+                    aplicarEfectoJugador(p,selected);
 
                 }
             }
@@ -42,19 +38,18 @@ public class ObjectManager {
 
     }
 
-    public void aplicarEfectoJugador(Gemas p ){//depdende del metodo anteriro este me lleva los puntajes 
+    public void aplicarEfectoJugador(Gemas p, int selected){//depdende del metodo anteriro este me lleva los puntajes
 
-        if(p.getObjType() == WATER_GEM){
-            puntos += WATER_GEM_VALOR; //se supone da los puntos del agua
+        if(p.getObjType() == 0&&selected==0){
+            puntos += FIRE_GEM_VALOR; //se supone da los puntos del agua
             p.setActive(false);
             System.out.println("puntos gema roja "+puntos);
         }
-        else if(p.getObjType() == FIRE_GEM){
-            //esto lo agregue yo para que dibuje la gema de fuego
-            p.setActive(true);
-            punto += FIRE_GEM_VALOR;
-            System.out.println("puntos gema azul "+puntos);
-            //playing.getJugador().puntosGemas(WATER_GEM_VALOR); //esta en jugador el metodo
+        else if(p.getObjType() == 1&&selected==1){
+            punto += WATER_GEM_VALOR;
+            p.setActive(false);
+            System.out.println("puntos gema azul "+punto);
+
         }
 
     }
