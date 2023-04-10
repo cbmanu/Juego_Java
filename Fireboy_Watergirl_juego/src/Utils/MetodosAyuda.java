@@ -1,6 +1,8 @@
 package Utils;
 
+import Objetos.Agua;
 import Objetos.Gemas;
+import Objetos.Lava;
 import Objetos.Plataforma;
 
 import static Utils.Constantes.ConstantesObjeto.*;
@@ -11,42 +13,42 @@ import java.awt.image.BufferedImage;
 public class MetodosAyuda {
 
     //metodos
-    public static boolean puedeMover(float x, float y, float width, float height, int[][] nvData,Rectangle2D.Float hitbox){
+    public static boolean puedeMover(float x, float y, float width, float height, int[][] nvData){
         
         //puntos de choque, primero se tomaran las esquinas en diagonal izquierda arriba/derecha abajo
-        if(!esSolido(x,y,nvData,hitbox))                       //esquina superior izquierda
-            if(!esSolido(x+width, y+height, nvData,hitbox))   //esquina inferior derecha superior izquierda
-                if(!esSolido(x+width, y, nvData,hitbox))      //esquina superior derecha
-                    if(!esSolido(x, y+height, nvData,hitbox)) //esquina inferior izquierda
-                        if(!esSolido(x, y+height/2, nvData,hitbox))
-                            if(!esSolido(x+width, y+height/2, nvData,hitbox)) //esquina inferior izquierda
-                                if(!hitbox.intersects(x,y,width,height))
-                                    return true;
+        if(!esSolido(x,y,nvData))                       //esquina superior izquierda
+            if(!esSolido(x+width, y+height, nvData))   //esquina inferior derecha superior izquierda
+                if(!esSolido(x+width, y, nvData))      //esquina superior derecha
+                    if(!esSolido(x, y+height, nvData)) //esquina inferior izquierda
+                        if(!esSolido(x, y+height/2, nvData))
+                            if(!esSolido(x+width, y+height/2, nvData)) //esquina inferior izquierda
+                                //if(!esSolido(x, (y+height)/2, nvData))//
+                           // if(!esSolido(x+width, (y+height)/2, nvData))//
+                                return true;
+
         return false;
     }
     
-    private static boolean esSolido(float x, float y, int[][] nvData,Rectangle2D.Float hitBox) {
+    private static boolean esSolido(float x, float y, int[][] nvData){
         int maxWidth = nvData[0].length * Juego.Juego.TILES_SIZE; //not really necessary, usar luego Juego.Juego.JUEGO_WIDTH
         //chequea los limites 
-        if (x < 0 || x >= maxWidth) { //Juego.Juego.JUEGO_WIDTH
+        if(x<0 || x>= maxWidth){ //Juego.Juego.JUEGO_WIDTH
             return true;
         }
-        if (y < 0 || y >= Juego.Juego.JUEGO_HEIGHT) {
+        if(y<0 || y>= Juego.Juego.JUEGO_HEIGHT){
             return true;
         }
-
-        float xIndex = x / Juego.Juego.TILES_SIZE;
-        float yIndex = y / Juego.Juego.TILES_SIZE;
-
+        
+        float xIndex = x/Juego.Juego.TILES_SIZE;
+        float yIndex = y/Juego.Juego.TILES_SIZE;
+        
         int valor = nvData[(int) yIndex][(int) xIndex];
-
-        if (valor >= 48 || valor < 0 || valor != 11) {
+        
+        if(valor >= 48 || valor<0 || valor!=11){
             return true;
         }
-        if (hitBox.intersects(x, y, 38 * Juego.Juego.SCALA, 50 * Juego.Juego.SCALA)){
-            return true;
-        }
-            return false;
+        
+        return false;
     }
     
     public static float GetEntityXPosNextToWall(Rectangle2D.Float hitbox, float xVeloci){
@@ -77,10 +79,10 @@ public class MetodosAyuda {
         }
     }
     
-    public static boolean EstaEnSuelo(Rectangle2D.Float hitbox, int[][] nvData,Rectangle2D.Float hitboxPlataforma){
+    public static boolean EstaEnSuelo(Rectangle2D.Float hitbox, int[][] nvData){
         //check the pixel below bottonleft and bottonright
-        if(!esSolido(hitbox.x, hitbox.y +hitbox.height +1, nvData,hitboxPlataforma)){
-            if(!esSolido(hitbox.x+hitbox.width, hitbox.y +hitbox.height+1, nvData,hitboxPlataforma))
+        if(!esSolido(hitbox.x, hitbox.y +hitbox.height +1, nvData)){
+            if(!esSolido(hitbox.x+hitbox.width, hitbox.y +hitbox.height+1, nvData))
                 return false; 
         }
         return true;
@@ -109,10 +111,43 @@ public class MetodosAyuda {
               return lista;  
     }
     public static Plataforma[] getPlataforma(){
-        Plataforma[] lista=new Plataforma[2];
-        lista[0]=new Plataforma(0,630,5);
-        lista[1]=new Plataforma(400,730,5);
-        System.out.println(lista[0]);
-        return lista;
+        Plataforma[] list = new Plataforma[2];
+        list[0]=new Plataforma(0,440,3);
+        return list;
+    }
+
+    public static Lava[] getLava(BufferedImage img) {
+        Lava[] lista = new Lava[3];
+        int contador =0;
+      
+        for(int j=0; j<img.getHeight(); j++ ){
+            for(int i=0;i<img.getWidth();i++){ 
+                
+                Color color = new Color(img.getRGB(i, j));
+                int valor = color.getBlue();
+                
+                if(valor == LAVA){
+                    lista[contador] = new Lava(i*Juego.Juego.TILES_SIZE, 850, valor);
+                    contador++;
+                } 
+            }}
+              return lista;
+    }
+
+    public static Agua[] getAgua(BufferedImage img) {
+        Agua[] lista = new Agua[3];
+        int contador =0;
+      
+        for(int j=0; j<img.getHeight(); j++ ){
+            for(int i=0;i<img.getWidth();i++){ 
+                
+                Color color = new Color(img.getRGB(i, j));
+                int valor = color.getBlue();
+                if(valor == AGUA){
+                    lista[contador] = new Agua(i*Juego.Juego.TILES_SIZE, 850, valor);
+                    contador++;
+                } 
+            }}
+              return lista;
     }
 }

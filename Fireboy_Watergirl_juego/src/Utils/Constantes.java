@@ -11,6 +11,8 @@ public class Constantes {
     public static class ConstantesObjeto{
         public static final int WATER_GEM =0;
         public static final int FIRE_GEM =1;
+        public static final int AGUA =3;
+        public static final int LAVA =4;
         
         public static final int WATER_GEM_VALOR = 1;
         public static final int FIRE_GEM_VALOR = 1;
@@ -19,6 +21,16 @@ public class Constantes {
         public static final int GEM_HEIGHT_DEFAULT = 24;
         public static final int GEM_WIDTH =(int)(Juego.SCALA*GEM_WIDTH_DEFAULT);
         public static final int GEM_HEIGHT =(int)(Juego.SCALA*GEM_HEIGHT_DEFAULT);
+        
+        public static final int LAVA_WIDTH_DEFAULT = 32;
+        public static final int LAVA_HEIGHT_DEFAULT = 32;
+        public static final int LAVA_WIDTH =(int)(Juego.SCALA*LAVA_WIDTH_DEFAULT);
+        public static final int LAVA_HEIGHT =(int)(Juego.SCALA*LAVA_HEIGHT_DEFAULT);
+        
+        public static final int AGUA_WIDTH_DEFAULT = 32;
+        public static final int AGUA_HEIGHT_DEFAULT = 32;
+        public static final int AGUA_WIDTH =(int)(Juego.SCALA*AGUA_WIDTH_DEFAULT);
+        public static final int AGUA_HEIGHT =(int)(Juego.SCALA*AGUA_HEIGHT_DEFAULT);
         
         public static int GetSpriteAmount(int object_type){
             switch(object_type){

@@ -1,6 +1,8 @@
 package Niveles;
 
+import Objetos.Agua;
 import Objetos.Gemas;
+import Objetos.Lava;
 import Objetos.Plataforma;
 import Utils.MetodosAyuda;
 import java.awt.image.BufferedImage;
@@ -15,20 +17,27 @@ public class Nivel {
     //private ArrayList<Gemas> gema;
     private Gemas[] gemas = new Gemas[16];
     private Plataforma[] plataforma = new Plataforma[2];
-
+    private Agua[] agua = new Agua[3];
+    private Lava[] lava = new Lava[3];
 
     //constructor 
     public Nivel(int[][] nvData, BufferedImage img){
         this.nvData = nvData;
         this.img = img;
         crearObjetos();
-        
-        //gemas[0] = new Gemas(400,300,0);
-        //gemas[1] = new Gemas(300,300,1);
+        crearLava(); //esto esta aca
+        crearAgua();
     }
     public Nivel(BufferedImage img){//constructor 
         this.img = img;
         crearObjetos();
+    }
+    private void crearLava() {
+        lava = MetodosAyuda.getLava(img);
+    }
+
+    private void crearAgua() {
+        agua = MetodosAyuda.getAgua(img);
     }
     
      public void crearObjetos() {
@@ -48,10 +57,15 @@ public class Nivel {
     
    //getters setters
     public Gemas[] getGemas(){
-       // System.out.println("getgemas "+gemas);
         return gemas;
     }
     public Plataforma[] getPlataforma(){
         return plataforma;
+    }
+    public Lava[] getLava(){
+        return lava;
+    }
+    public Agua[] getAgua(){
+        return agua;
     }
 }

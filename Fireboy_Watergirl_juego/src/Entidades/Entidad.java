@@ -9,6 +9,7 @@ public abstract class Entidad {
     protected float x,y; 
     protected int width, height;
     protected Rectangle2D.Float hitbox;
+    protected int nivelVida;
     
     public Entidad(float x, float y, int width, int height){
         this.x = x;

@@ -11,75 +11,41 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 public class ObjectManager {
     //atributos
     private Playing playing;
     private BufferedImage[][] gemasImg;
     private BufferedImage plataformaImg;
-    private  Plataforma[] plataforma=new Plataforma[2];
-
-
+    private Plataforma[] plataforma=new Plataforma[2];
     private Gemas[] gemas= new Gemas[16];//
-    int puntos =0, punto =0;
+    private Agua[] agua = new Agua[3];
+    private Lava[] lava = new Lava[3];
+    private BufferedImage lavaImg, aguaImg;
+    public int puntos =0, punto =0;
 
 
     //constructor
     public ObjectManager(Playing playing){
         this.playing = playing;
-        cargarImgGemas();
-        cargarImgPlataforma();
+        cargarImg();
     }
 
 
-    public void checkObjetoTouch(Rectangle.Float hitbox,int selected){ //detecta si ha chocado, esta conectado con aplicarEfectoJugador
-        for(Gemas p : gemas){
-            if(p.isActive()){
-                if(hitbox.intersects(p.getHitbox())){
-                    //p.setActive(false);
-                    aplicarEfectoJugador(p,selected);
 
-                }
-            }
-        }
-    }
-    public void checkPlataformaTouch(Rectangle.Float hitbox) {
-        for (Plataforma p : plataforma) {
-            if(hitbox.intersects(p.hitbox)){
-            }
-        }
-    }
-
-
-    public void aplicarEfectoJugador(Gemas p, int selected){//depdende del metodo anteriro este me lleva los puntajes
-        if(p.getObjType() == 0&&selected==0){
-            puntos += FIRE_GEM_VALOR; //se supone da los puntos del agua
-            p.setActive(false);
-            System.out.println("puntos gema roja "+puntos);
-            new Sound();
-        }
-        else if(p.getObjType() == 1&&selected==1){
-            punto += WATER_GEM_VALOR;
-            p.setActive(false);
-            System.out.println("puntos gema azul "+punto);
-            new Sound();
-
-        }
-
-    }
-
-    public void checkObjetoHit(Rectangle.Float colecciona){//esto sera luego para los botones de los elevadores 
-
-    }
+//    public void checkObjetoHit(Rectangle.Float colecciona){//esto sera luego para los botones de los elevadores
+//
+//    }
 
     //
     public void cargarObjetos(Nivel nivelUno){
         gemas = nivelUno.getGemas();
-        plataforma = nivelUno.getPlataforma();
+        plataforma=nivelUno.getPlataforma();
+        lava = nivelUno.getLava();
+        agua = nivelUno.getAgua();
     }
 
-    private void cargarImgGemas() {
+    private void cargarImg() {
         BufferedImage gemasSprite = CargarGuardar.GetSpriteAtlas(CargarGuardar.GEMA_ATLAS);
         gemasImg = new BufferedImage[2][5];
 
@@ -88,9 +54,10 @@ public class ObjectManager {
                 gemasImg[j][i] = gemasSprite.getSubimage(16*i, 12*j, 16,12);
             }
         }
-    }
-    public void cargarImgPlataforma(){
-         plataformaImg = CargarGuardar.GetSpriteAtlas(CargarGuardar.PLATAFORMA_P);
+        plataformaImg=CargarGuardar.GetSpriteAtlas(CargarGuardar.PLATAFORMA_P);
+        lavaImg = CargarGuardar.GetSpriteAtlas(CargarGuardar.LAVA_ATLAS);
+        //imagenes de agua
+        aguaImg = CargarGuardar.GetSpriteAtlas(CargarGuardar.AGUA_ATLAS);
     }
 
     public void update(){
@@ -105,9 +72,23 @@ public class ObjectManager {
 
     public void draw(Graphics g, int xnvOffset){
         drawGemas(g,xnvOffset);
-        drawPuentes(g);
+        drawPlataforma(g);
+        drawLava(g,xnvOffset);
+        drawAgua(g,xnvOffset);
+    }
+    private void drawLava(Graphics g, int xnvOffset) {
+        for(Lava l: lava){
+            //System.out.println("imagen lava " +xnvOffset);
+            g.drawImage(lavaImg, (int)(l.getHitbox().x - xnvOffset),
+                    (int)(l.getHitbox().y ), LAVA_WIDTH, LAVA_HEIGHT, null);}
     }
 
+    private void drawAgua(Graphics g, int xnvOffset){
+        for(Agua a: agua){
+            //System.out.println("imagen lava " +xnvOffset);
+            g.drawImage(aguaImg, (int)(a.getHitbox().x - xnvOffset),
+                    (int)(a.getHitbox().y ), AGUA_WIDTH, AGUA_HEIGHT, null);}
+    }
 
 
 
@@ -128,8 +109,68 @@ public class ObjectManager {
 
         }
     }
-    private void drawPuentes(Graphics g){
-        g.drawImage(plataformaImg,40,630,plataformaImg.getWidth(),plataformaImg.getHeight(),null);
+
+    private void drawPlataforma(Graphics g) {
+        for(Plataforma  p: plataforma){
+            g.drawImage(plataformaImg,0,440,96,12,null);
+        }
     }
+
+
+    public void checkLavaTouch(Rectangle.Float hitbox,int selected,Jugador jugador){
+        for(Lava l: lava){
+            if(selected==1){
+                if(hitbox.intersects(l.getHitbox())){
+                    System.out.println("LAVA LAVA"); //no esta entrando aqui no esta creando la colision
+                    jugador.muerte();
+                }
+            }
+        }
+    }
+
+    //metodo para cuando el jugador toque el agua
+    public void checkAguaTouch(Rectangle.Float hitbox,int selected,Jugador jugador){
+        if(selected==0){
+        for(Agua a: agua){
+                if(hitbox.intersects(a.getHitbox())){
+                    System.out.println("AGUA AGUA"); //no esta entrando aqui no esta creando la colision
+                    jugador.muerte();}
+            }
+        }
+    }
+    public void checkObjetoTouch(Rectangle.Float hitbox,int selected){ //detecta si ha chocado, esta conectado con aplicarEfectoJugador
+        for(Gemas p : gemas){
+            if(p.isActive()){
+                if(hitbox.intersects(p.getHitbox())){
+                    //p.setActive(false);
+                    aplicarEfectoJugador(p,selected);
+
+                }
+            }
+        }
+
+    }
+
+    public void aplicarEfectoJugador(Gemas p ,int selected){//depdende del metodo anteriro este me lleva los puntajes
+        if(p.getObjType() == 0&& selected==0){
+            new Sound();
+            p.setActive(false);
+            puntos += FIRE_GEM_VALOR; //se supone da los puntos del agua
+            System.out.println("puntos gema roja "+puntos);
+        }
+        else if(p.getObjType() == 1&& selected==1){
+            new Sound();
+            //esto lo agregue yo para que dibuje la gema de fuego
+            p.setActive(false);
+            punto += WATER_GEM_VALOR;
+            System.out.println("puntos gema azul "+punto);
+            //playing.getJugador().puntosGemas(WATER_GEM_VALOR); //esta en jugador el metodo
+        }
+
+    }
+
+    public void checkPlataformaTouch(Rectangle2D.Float hitbox) {
+    }
+
 
 }

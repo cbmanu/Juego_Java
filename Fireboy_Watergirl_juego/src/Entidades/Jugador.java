@@ -31,20 +31,34 @@ public class Jugador extends Entidad{
     private boolean aire = false;
     private Rectangle2D.Float rect= new Rectangle2D.Float (0,630,96,12);
     int puntos =0;
-
+    
+    //variables para vivir
+    private int currentHealth =1;
+    
     //constructor
     public Jugador(float x, float y, int width, int height, int selected,Playing playing) {
         super(x, y,width, height);
         this.playing = playing;//
+        this.nivelVida =1;
         cargaAnimaciones(selected);
         iniHitbox(x, y,38*Juego.Juego.SCALA, 50*Juego.Juego.SCALA);
     }
 
     public void update(){
-        actualizarPosicion();
-        if(movimiento)//esto es para el check del object manager
-            checkObjetoTouched(); //esto esta aqui
+        if(currentHealth == 0){
+            playing.setGameOver(true);
+            aniTick=0;
+            aniIndex=0;
+            playing.setJugadorMuriendo(true);
+            return;
+        }
 
+        actualizarPosicion();
+        if(movimiento){//esto es para el check del object manager
+            checkObjetoTouched(); //esto esta aqui
+            checkLavaTouched();
+            checkAguaTouched();
+        }
 
         actualizarAniTick();
         setAnimacion();
@@ -54,6 +68,14 @@ public class Jugador extends Entidad{
     public void checkObjetoTouched(){
         playing.checkGemaTouched(hitbox);//esto viene del playing
         playing.checkPlataformaTouched(hitbox);
+    }
+
+    private void checkLavaTouched() {//cuando toca la lava
+        playing.checkLavaTouched(hitbox); //esta en playing al final
+    }
+
+    private void checkAguaTouched() {
+        playing.checkAguaTouched(hitbox);
     }
 
     public void render(Graphics g) {
@@ -122,13 +144,13 @@ public class Jugador extends Entidad{
             xVeloci += playerSpeed;
 
         if(!aire){
-            if(!ayuda.EstaEnSuelo(hitbox, nvData,rect)){
+            if(!ayuda.EstaEnSuelo(hitbox, nvData)){
                 aire = true;
             }
         }
 
         if(aire){
-            if(ayuda.puedeMover(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, nvData,rect)){
+            if(ayuda.puedeMover(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, nvData)){
                 hitbox.y += airSpeed;
                 airSpeed += gravedad;
                 updateXPos(xVeloci);
@@ -147,6 +169,17 @@ public class Jugador extends Entidad{
 
         movimiento = true;
     }
+    public void resetAll(){
+        resetDirBoolean();
+        aire=false;
+        movimiento = false;
+        currentHealth=1;
+        hitbox.x=x;
+        hitbox.y = y;
+        if ((!ayuda.EstaEnSuelo(hitbox, nvData))) {
+            aire = true;
+    }
+    }
 
     private void jump() {
         if(aire)
@@ -160,14 +193,26 @@ public class Jugador extends Entidad{
         airSpeed=0;
     }
 
+
+    //para vivir 
+    public void changeHealth(int valor){
+        currentHealth = valor;
+        
+        if(currentHealth == 0){
+            //gameOver();
+        }
+    }
+
     private void updateXPos(float xVeloci) {
-        if(ayuda.puedeMover(hitbox.x+xVeloci,hitbox.y, hitbox.width, hitbox.height, nvData,rect)){
+        if(ayuda.puedeMover(hitbox.x+xVeloci,hitbox.y, hitbox.width, hitbox.height, nvData)){
             hitbox.x += xVeloci;
         }else{
             hitbox.x = ayuda.GetEntityXPosNextToWall(hitbox,xVeloci);
         }
-    }
 
+       }
+    
+    
     //para las gemas en objectmanager
     public void puntosGemas(int valor) {
 
@@ -175,6 +220,10 @@ public class Jugador extends Entidad{
 
         //System.out.println("recolecto gema azul " + puntos);
 
+    }
+    
+    public void muerte() {//esto esta en el object manager
+        currentHealth =0;
     }
 
     private void cargaAnimaciones(int selected) {
@@ -202,7 +251,7 @@ public class Jugador extends Entidad{
 
     public void loadNvlData(int[][] nvData){
         this.nvData = nvData;
-        if(ayuda.EstaEnSuelo(hitbox, nvData,new Rectangle2D.Float(0,630,96,12)))
+        if(ayuda.EstaEnSuelo(hitbox, nvData))
             aire =  true;
     }
 
@@ -252,6 +301,12 @@ public class Jugador extends Entidad{
     public void setJump(boolean jump){
         this.jump =jump;
     }
+
+    
+
+    
+
+    
 
 
 }
