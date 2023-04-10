@@ -1,6 +1,8 @@
 package Utils;
 
+import Objetos.Agua;
 import Objetos.Gemas;
+import Objetos.Lava;
 import static Utils.Constantes.ConstantesObjeto.*;
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
@@ -105,5 +107,41 @@ public class MetodosAyuda {
                 } 
             }}
               return lista;  
+    }
+
+    public static Lava[] getLava(BufferedImage img) {
+        Lava[] lista = new Lava[3];
+        int contador =0;
+      
+        for(int j=0; j<img.getHeight(); j++ ){
+            for(int i=0;i<img.getWidth();i++){ 
+                
+                Color color = new Color(img.getRGB(i, j));
+                int valor = color.getBlue();
+                
+                if(valor == LAVA){
+                    lista[contador] = new Lava(i*Juego.Juego.TILES_SIZE, j*Juego.Juego.TILES_SIZE, valor); 
+                    contador++;
+                } 
+            }}
+              return lista;
+    }
+
+    public static Agua[] getAgua(BufferedImage img) {
+        Agua[] lista = new Agua[3];
+        int contador =0;
+      
+        for(int j=0; j<img.getHeight(); j++ ){
+            for(int i=0;i<img.getWidth();i++){ 
+                
+                Color color = new Color(img.getRGB(i, j));
+                int valor = color.getBlue();
+                
+                if(valor == AGUA){
+                    lista[contador] = new Agua(i*Juego.Juego.TILES_SIZE, j*Juego.Juego.TILES_SIZE, valor);
+                    contador++;
+                } 
+            }}
+              return lista;
     }
 }

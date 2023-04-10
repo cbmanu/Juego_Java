@@ -28,19 +28,30 @@ public class Jugador extends Entidad{
     private boolean aire = false;
     int puntos =0;
     
+    //variables para vivir
+    private int currentHealth =1;
+    
     //constructor
     public Jugador(float x, float y, int width, int height, int selected,Playing playing) {
         super(x, y,width, height);
         this.playing = playing;//
+        this.nivelVida =1;
         cargaAnimaciones(selected);
         iniHitbox(x, y,38*Juego.Juego.SCALA, 50*Juego.Juego.SCALA);
     }
 
     public void update(){
+        if(currentHealth == 0){
+            playing.setGameOver(true);
+            return;
+        }
+   
         actualizarPosicion();
-        if(movimiento)//esto es para el check del object manager
+        if(movimiento){//esto es para el check del object manager
             checkObjetoTouched(); //esto esta aqui
-
+            checkLavaTouched();
+            checkAguaTouched();
+        }
 
         actualizarAniTick();
         setAnimacion();
@@ -49,6 +60,14 @@ public class Jugador extends Entidad{
     //para la colicion de gemas que viene del objectmanager
     public void checkObjetoTouched(){
         playing.checkGemaTouched(hitbox);//esto viene del playing
+    }
+    
+    private void checkLavaTouched() {//cuando toca la lava
+        playing.checkLavaTouched(this); //esta en playing al final
+    }
+    
+    private void checkAguaTouched() {
+        playing.checkAguaTouched(this);
     }
 
     public void render(Graphics g) {
@@ -154,6 +173,15 @@ public class Jugador extends Entidad{
         aire = false;
         airSpeed=0;
     }
+    
+    //para vivir 
+    public void changeHealth(int valor){
+        currentHealth = valor;
+        
+        if(currentHealth == 0){
+            //gameOver();
+        }
+    }
 
     private void updateXPos(float xVeloci) {
         if(puedeMover(hitbox.x+xVeloci,hitbox.y, hitbox.width, hitbox.height, nvData)){
@@ -165,20 +193,6 @@ public class Jugador extends Entidad{
        }
     
     
-   /* private void cargaAnimaciones() {
-
-         BufferedImage img = CargarGuardar.GetSpriteAtlas(CargarGuardar.JUGADOR_ATLAS);
-            
-           animaciones = new BufferedImage[5][4];//as big as the sprites images have 
-            for (int j = 0; j<animaciones.length; j++){ 
-                for (int i =0; i<animaciones[j].length; i++){
-                    animaciones[j][i] = img.getSubimage(i*256, j*256, 220, 220); 
-        }
-       }
-     
-
-    }*/
-
     //para las gemas en objectmanager
     public void puntosGemas(int valor) {
 
@@ -186,6 +200,10 @@ public class Jugador extends Entidad{
 
         //System.out.println("recolecto gema azul " + puntos);
 
+    }
+    
+    public void muerte() {//esto esta en el object manager
+        currentHealth =0;
     }
 
     private void cargaAnimaciones(int selected) {
@@ -263,6 +281,12 @@ public class Jugador extends Entidad{
     public void setJump(boolean jump){
         this.jump =jump;
     }
+
+    
+
+    
+
+    
 
 
 }

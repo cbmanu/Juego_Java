@@ -19,6 +19,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.Random;
+import ui.GameOverOverlay;
 
 public class Playing extends State implements Statemethods {
 
@@ -27,16 +28,16 @@ public class Playing extends State implements Statemethods {
 
     private NivelManager nivelmanager;
     private ObjectManager objectManager;
+    private GameOverOverlay gameOverOverlay;
     private int xnvOffset;
     private int leftBorde = (int)(0.2*Juego.JUEGO_WIDTH);
     private int rightBorde = (int)(0.8*Juego.JUEGO_HEIGHT);
     private int maxLvOffsetX;
     
     private int selected=0;
-    private BufferedImage backgroundImg, objFondo, obj2Fondo;
-    private int[] obj2FondoPos;
+    private BufferedImage backgroundImg;
+    private boolean gameOver;
 
-    private Random rnd = new Random();
     
     //constructor 
     public Playing(Juego juego) {
@@ -60,7 +61,7 @@ public class Playing extends State implements Statemethods {
     private void iniciClases() {
         nivelmanager = new NivelManager(juego);
         objectManager = new ObjectManager(this);
-        
+        gameOverOverlay = new GameOverOverlay(this);
 
     }
 //    public void windowFocuseLost(){
@@ -91,12 +92,13 @@ public class Playing extends State implements Statemethods {
         //fondo
         g.drawImage(backgroundImg, 0, 0, Juego.JUEGO_WIDTH, Juego.JUEGO_HEIGHT, null);
         
-        
-        //drawObjetosFondo(g);
         calcularPersonaje(g);
 
         nivelmanager.draw(g);
         objectManager.draw(g, xnvOffset);
+        
+        if(gameOver)
+            gameOverOverlay.draw(g);
     }
     @Override
     public void mousePressed(MouseEvent e) {
@@ -119,6 +121,7 @@ public class Playing extends State implements Statemethods {
 
     @Override
     public void keyReleased(KeyEvent e) {
+        if(!gameOver){
         switch(e.getKeyCode()){
             case KeyEvent.VK_W:   //asegurando que con cada tecla se acabe el movimiento
                 watergirl.setJump(false); //salto
@@ -138,12 +141,16 @@ public class Playing extends State implements Statemethods {
             case KeyEvent.VK_RIGHT:
                 fireboy.setRight(false);
                 break;
-        }
+        }}
 
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
+    
+        if(gameOver)
+            gameOverOverlay.keyPressed(e);
+        else{
         switch(e.getKeyCode()){
             case KeyEvent.VK_W:
                 watergirl.setJump(true); //salto
@@ -163,7 +170,15 @@ public class Playing extends State implements Statemethods {
             case KeyEvent.VK_RIGHT:
                 fireboy.setRight(true);
                 break;
-        }
+        } }
+    }
+    
+    public void resetAll() {//invocada en el gameoveroverlay 
+        
+    }
+    
+    public void setGameOver(boolean gameOver) {//invoca en el jugador
+        this.gameOver = gameOver;
     }
 
     //getters setters
@@ -171,9 +186,21 @@ public class Playing extends State implements Statemethods {
         return objectManager;
     }
 
-    //esto es para el jugador
+    //esto es para el jugador cuando toca un objeto 
     public void checkGemaTouched(Rectangle2D.Float hitbox){
         objectManager.checkObjetoTouch(hitbox); //revisar si es el mismo touch
     }
+
+    public void checkLavaTouched(Jugador p) {//esta en jugador
+        objectManager.checkLavaTouch(p);
+    }
+
+    public void checkAguaTouched(Jugador p) {
+        objectManager.checkAguaTouch(p);
+    }
+
+    
+
+    
     
 }

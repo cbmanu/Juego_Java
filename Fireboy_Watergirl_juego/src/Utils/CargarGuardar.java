@@ -28,6 +28,9 @@ public class CargarGuardar {
     
     //objetos del nivel
     public static final String GEMA_ATLAS="gemas_sprites.png";
+    //obstaculos
+    public static final String LAVA_ATLAS="lava_img.png";
+    public static final String AGUA_ATLAS="agua_img.png";
 
     public static final String WASD="wasd.png";
     public static final String ARROWS="arrows.png";
