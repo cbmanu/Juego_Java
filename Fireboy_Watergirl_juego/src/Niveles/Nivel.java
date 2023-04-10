@@ -1,6 +1,7 @@
 package Niveles;
 
 import Objetos.Gemas;
+import Objetos.Plataforma;
 import Utils.MetodosAyuda;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -13,24 +14,26 @@ public class Nivel {
     private int[][] nvData;
     //private ArrayList<Gemas> gema;
     private Gemas[] gemas = new Gemas[16];
-    
-    
+    private Plataforma[] plataforma = new Plataforma[2];
+
+
     //constructor 
     public Nivel(int[][] nvData, BufferedImage img){
         this.nvData = nvData;
         this.img = img;
-        crearGemas();
+        crearObjetos();
         
         //gemas[0] = new Gemas(400,300,0);
         //gemas[1] = new Gemas(300,300,1);
     }
     public Nivel(BufferedImage img){//constructor 
         this.img = img;
-        crearGemas();
+        crearObjetos();
     }
     
-     public void crearGemas() {
-        gemas = MetodosAyuda.getGemas(img);
+     public void crearObjetos() {
+         plataforma=MetodosAyuda.getPlataforma();
+         gemas = MetodosAyuda.getGemas(img);
      }
     
     //metodo para obtener la posicion especifica del index 
@@ -47,5 +50,8 @@ public class Nivel {
     public Gemas[] getGemas(){
        // System.out.println("getgemas "+gemas);
         return gemas;
+    }
+    public Plataforma[] getPlataforma(){
+        return plataforma;
     }
 }

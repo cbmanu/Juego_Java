@@ -1,7 +1,9 @@
 package Entidades;
 import Gamestates.Playing;
+import Objetos.ObjectManager;
 import Utils.CargarGuardar;
-import static Utils.MetodosAyuda.*;
+import Utils.MetodosAyuda;
+import  Utils.MetodosAyuda.*;
 import static Utils.Constantes.ConstantJugador.*;
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
@@ -10,6 +12,7 @@ import java.awt.image.BufferedImage;
 public class Jugador extends Entidad{
     //atributos
     private Playing playing;
+    private MetodosAyuda ayuda;
     private BufferedImage[][] animaciones;
     private int aniTick, aniIndex, aniSpeed = 15;
     private int jugadorAction = CORRER;
@@ -26,6 +29,7 @@ public class Jugador extends Entidad{
     private float jumpSpeed = -2.25f* Juego.Juego.SCALA;
     private float fallSpeedAfterColision=0.5f * Juego.Juego.SCALA;
     private boolean aire = false;
+    private Rectangle2D.Float rect= new Rectangle2D.Float (0,630,96,12);
     int puntos =0;
 
     //constructor
@@ -49,6 +53,7 @@ public class Jugador extends Entidad{
     //para la colicion de gemas que viene del objectmanager
     public void checkObjetoTouched(){
         playing.checkGemaTouched(hitbox);//esto viene del playing
+        playing.checkPlataformaTouched(hitbox);
     }
 
     public void render(Graphics g) {
@@ -117,19 +122,19 @@ public class Jugador extends Entidad{
             xVeloci += playerSpeed;
 
         if(!aire){
-            if(!EstaEnSuelo(hitbox, nvData)){
+            if(!ayuda.EstaEnSuelo(hitbox, nvData,rect)){
                 aire = true;
             }
         }
 
         if(aire){
-            if(puedeMover(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, nvData)){
+            if(ayuda.puedeMover(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, nvData,rect)){
                 hitbox.y += airSpeed;
                 airSpeed += gravedad;
                 updateXPos(xVeloci);
             }else{
                 //if we cannot move up or down
-                hitbox.y = GetEntityYPosUnderAboveF(hitbox, airSpeed);
+                hitbox.y = ayuda.GetEntityYPosUnderAboveF(hitbox, airSpeed);
                 if(airSpeed>0)
                     resetAire();
                 else
@@ -156,10 +161,10 @@ public class Jugador extends Entidad{
     }
 
     private void updateXPos(float xVeloci) {
-        if(puedeMover(hitbox.x+xVeloci,hitbox.y, hitbox.width, hitbox.height, nvData)){
+        if(ayuda.puedeMover(hitbox.x+xVeloci,hitbox.y, hitbox.width, hitbox.height, nvData,rect)){
             hitbox.x += xVeloci;
         }else{
-            hitbox.x = GetEntityXPosNextToWall(hitbox,xVeloci);
+            hitbox.x = ayuda.GetEntityXPosNextToWall(hitbox,xVeloci);
         }
     }
 
@@ -197,7 +202,7 @@ public class Jugador extends Entidad{
 
     public void loadNvlData(int[][] nvData){
         this.nvData = nvData;
-        if(EstaEnSuelo(hitbox, nvData))
+        if(ayuda.EstaEnSuelo(hitbox, nvData,new Rectangle2D.Float(0,630,96,12)))
             aire =  true;
     }
 

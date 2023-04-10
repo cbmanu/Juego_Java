@@ -191,5 +191,8 @@ public class Playing extends State implements Statemethods {
     public void checkGemaTouched(Rectangle2D.Float hitbox){
         objectManager.checkObjetoTouch(hitbox,juego.getSeleccion().getSelected()); //revisar si es el mismo touch
     }
+    public void checkPlataformaTouched(Rectangle2D.Float hitbox){
+        objectManager.checkPlataformaTouch(hitbox);
+    }
     
 }

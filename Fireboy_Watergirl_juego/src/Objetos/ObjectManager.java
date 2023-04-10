@@ -4,6 +4,8 @@ import Entidades.Jugador;
 import Gamestates.Playing;
 import Niveles.Nivel;
 import Utils.CargarGuardar;
+import Utils.Sound;
+
 import static Utils.Constantes.ConstantesObjeto.*;
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -15,6 +17,10 @@ public class ObjectManager {
     //atributos
     private Playing playing;
     private BufferedImage[][] gemasImg;
+    private BufferedImage plataformaImg;
+    private  Plataforma[] plataforma=new Plataforma[2];
+
+
     private Gemas[] gemas= new Gemas[16];//
     int puntos =0, punto =0;
 
@@ -22,8 +28,10 @@ public class ObjectManager {
     //constructor
     public ObjectManager(Playing playing){
         this.playing = playing;
-        cargarImg();
+        cargarImgGemas();
+        cargarImgPlataforma();
     }
+
 
     public void checkObjetoTouch(Rectangle.Float hitbox,int selected){ //detecta si ha chocado, esta conectado con aplicarEfectoJugador
         for(Gemas p : gemas){
@@ -35,20 +43,27 @@ public class ObjectManager {
                 }
             }
         }
-
+    }
+    public void checkPlataformaTouch(Rectangle.Float hitbox) {
+        for (Plataforma p : plataforma) {
+            if(hitbox.intersects(p.hitbox)){
+            }
+        }
     }
 
-    public void aplicarEfectoJugador(Gemas p, int selected){//depdende del metodo anteriro este me lleva los puntajes
 
+    public void aplicarEfectoJugador(Gemas p, int selected){//depdende del metodo anteriro este me lleva los puntajes
         if(p.getObjType() == 0&&selected==0){
             puntos += FIRE_GEM_VALOR; //se supone da los puntos del agua
             p.setActive(false);
             System.out.println("puntos gema roja "+puntos);
+            new Sound();
         }
         else if(p.getObjType() == 1&&selected==1){
             punto += WATER_GEM_VALOR;
             p.setActive(false);
             System.out.println("puntos gema azul "+punto);
+            new Sound();
 
         }
 
@@ -61,9 +76,10 @@ public class ObjectManager {
     //
     public void cargarObjetos(Nivel nivelUno){
         gemas = nivelUno.getGemas();
+        plataforma = nivelUno.getPlataforma();
     }
 
-    private void cargarImg() {
+    private void cargarImgGemas() {
         BufferedImage gemasSprite = CargarGuardar.GetSpriteAtlas(CargarGuardar.GEMA_ATLAS);
         gemasImg = new BufferedImage[2][5];
 
@@ -72,6 +88,9 @@ public class ObjectManager {
                 gemasImg[j][i] = gemasSprite.getSubimage(16*i, 12*j, 16,12);
             }
         }
+    }
+    public void cargarImgPlataforma(){
+         plataformaImg = CargarGuardar.GetSpriteAtlas(CargarGuardar.PLATAFORMA_P);
     }
 
     public void update(){
@@ -86,6 +105,7 @@ public class ObjectManager {
 
     public void draw(Graphics g, int xnvOffset){
         drawGemas(g,xnvOffset);
+        drawPuentes(g);
     }
 
 
@@ -107,6 +127,9 @@ public class ObjectManager {
 
 
         }
+    }
+    private void drawPuentes(Graphics g){
+        g.drawImage(plataformaImg,40,630,plataformaImg.getWidth(),plataformaImg.getHeight(),null);
     }
 
 }
