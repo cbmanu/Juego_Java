@@ -35,6 +35,7 @@ public class Jugador extends Entidad{
     //variables para vivir
     private int currentHealth =1;
     
+    
     //constructor
     public Jugador(float x, float y, int width, int height, int selected,Playing playing) {
         super(x, y,width, height);
@@ -58,10 +59,15 @@ public class Jugador extends Entidad{
             checkObjetoTouched(); //esto esta aqui
             checkLavaTouched();
             checkAguaTouched();
+            checkPuertaFuegoTouched();
         }
 
         actualizarAniTick();
         setAnimacion();
+    }
+    
+    private void checkPuertaFuegoTouched() {//new new
+        playing.checkPuertaTouched(hitbox);
     }
 
     //para la colicion de gemas que viene del objectmanager
@@ -225,6 +231,10 @@ public class Jugador extends Entidad{
     public void muerte() {//esto esta en el object manager
         currentHealth =0;
     }
+    
+    public void ganar(){
+        currentHealth = 2;
+    }
 
     private void cargaAnimaciones(int selected) {
 
@@ -301,5 +311,9 @@ public class Jugador extends Entidad{
     public void setJump(boolean jump){
         this.jump =jump;
     }
+
+    
+
+    
 
 }

@@ -4,6 +4,7 @@ import Objetos.Agua;
 import Objetos.Gemas;
 import Objetos.Lava;
 import Objetos.Plataforma;
+import Objetos.Puertas;
 
 import static Utils.Constantes.ConstantesObjeto.*;
 import java.awt.Color;
@@ -146,6 +147,23 @@ public class MetodosAyuda {
                 if(valor == AGUA){
                     lista[contador] = new Agua(i*Juego.Juego.TILES_SIZE, 850, valor);
                     contador++;
+                } 
+            }}
+              return lista;
+    }
+
+    public static Puertas getPuertaFuego(BufferedImage img) {
+        Puertas lista = null;//REVISAR ESTO
+      
+        for(int j=0; j<img.getHeight(); j++ ){
+            for(int i=0;i<img.getWidth();i++){ 
+                
+                Color color = new Color(img.getRGB(i, j));
+                int valor = color.getBlue();
+                
+                if(valor == PUERTA_F){
+                    lista = new Puertas(i*Juego.Juego.TILES_SIZE, 850, valor);
+                    return lista;
                 } 
             }}
               return lista;

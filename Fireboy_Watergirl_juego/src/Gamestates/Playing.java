@@ -221,9 +221,14 @@ public class Playing extends State implements Statemethods {
     public void checkAguaTouched(Rectangle2D.Float hitbox) {
         objectManager.checkAguaTouch(hitbox,juego.getSeleccion().getSelected(),fireboy);
     }
-
+    
+    public void checkPuertaTouched(Rectangle2D.Float hitbox) {
+        objectManager.checkPuertaTouch(hitbox,juego.getSeleccion().getSelected(),watergirl);
+    }
 
     public void setJugadorMuriendo(boolean jugadorMuriendo) {
         this.jugadorMuriendo=jugadorMuriendo;
     }
+
+    
 }

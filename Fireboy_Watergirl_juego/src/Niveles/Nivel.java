@@ -4,9 +4,9 @@ import Objetos.Agua;
 import Objetos.Gemas;
 import Objetos.Lava;
 import Objetos.Plataforma;
+import Objetos.Puertas;
 import Utils.MetodosAyuda;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 
 public class Nivel {
@@ -19,6 +19,7 @@ public class Nivel {
     private Plataforma[] plataforma = new Plataforma[2];
     private Agua[] agua = new Agua[3];
     private Lava[] lava = new Lava[3];
+    private Puertas puertas,puertaAgua;
 
     //constructor 
     public Nivel(int[][] nvData, BufferedImage img){
@@ -27,6 +28,8 @@ public class Nivel {
         crearObjetos();
         crearLava(); //esto esta aca
         crearAgua();
+        crearPuertaFuego();
+        crearPuertaAgua();
     }
     public Nivel(BufferedImage img){//constructor 
         this.img = img;
@@ -44,7 +47,15 @@ public class Nivel {
          plataforma=MetodosAyuda.getPlataforma();
          gemas = MetodosAyuda.getGemas(img);
      }
-    
+     
+     private void crearPuertaFuego() {
+         puertas = MetodosAyuda.getPuertaFuego(img);
+     }
+    private void crearPuertaAgua() {
+        puertaAgua = MetodosAyuda.getPuertaFuego(img);
+    }
+
+
     //metodo para obtener la posicion especifica del index 
     public int getSpriteIndex(int x,int y){
         return nvData[y][x];
@@ -67,5 +78,13 @@ public class Nivel {
     }
     public Agua[] getAgua(){
         return agua;
+    }
+    
+    public Puertas getPuertaF(){
+        return puertas;
+    }
+
+    public Puertas getPuertaW() {
+        return puertaAgua;
     }
 }

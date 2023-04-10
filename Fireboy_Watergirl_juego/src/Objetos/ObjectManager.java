@@ -21,7 +21,10 @@ public class ObjectManager {
     private Gemas[] gemas= new Gemas[16];//
     private Agua[] agua = new Agua[3];
     private Lava[] lava = new Lava[3];
-    private BufferedImage lavaImg, aguaImg;
+    private Puertas puertas;
+    private Puertas puertaAgua;
+    //check this is  from metodos ayuda and level
+    private BufferedImage lavaImg, aguaImg, puertaFimg,puertaWimg;
     public int puntos =0, punto =0;
 
 
@@ -43,6 +46,8 @@ public class ObjectManager {
         plataforma=nivelUno.getPlataforma();
         lava = nivelUno.getLava();
         agua = nivelUno.getAgua();
+        puertas =  nivelUno.getPuertaF();
+        puertaAgua =  nivelUno.getPuertaW();
     }
 
     private void cargarImg() {
@@ -58,6 +63,9 @@ public class ObjectManager {
         lavaImg = CargarGuardar.GetSpriteAtlas(CargarGuardar.LAVA_ATLAS);
         //imagenes de agua
         aguaImg = CargarGuardar.GetSpriteAtlas(CargarGuardar.AGUA_ATLAS);
+        //puertas
+        puertaFimg = CargarGuardar.GetSpriteAtlas(CargarGuardar.PUERTAF_ATLAS);
+        puertaWimg = CargarGuardar.GetSpriteAtlas(CargarGuardar.PUERTAW_ATLAS);
     }
 
     public void update(){
@@ -75,7 +83,19 @@ public class ObjectManager {
         drawPlataforma(g);
         drawLava(g,xnvOffset);
         drawAgua(g,xnvOffset);
+        drawPuertaFuego(g,xnvOffset);
+        drawPuertaAgua(g,xnvOffset);
     }
+    
+    private void drawPuertaFuego(Graphics g, int xnvOffset) {///
+        g.drawImage(puertaFimg, (int)(puertas.getHitbox().x - xnvOffset),
+                    80, PUERTAF_WIDTH, PUERTAF_HEIGHT, null);
+    }
+    private void drawPuertaAgua(Graphics g, int xnvOffset) {///
+        g.drawImage(puertaWimg, 1050,
+                80, PUERTAF_WIDTH, PUERTAF_HEIGHT, null);
+    }
+    
     private void drawLava(Graphics g, int xnvOffset) {
         for(Lava l: lava){
             //System.out.println("imagen lava " +xnvOffset);
@@ -133,7 +153,6 @@ public class ObjectManager {
         if(selected==0){
         for(Agua a: agua){
                 if(hitbox.intersects(a.getHitbox())){
-                    System.out.println("AGUA AGUA"); //no esta entrando aqui no esta creando la colision
                     jugador.muerte();}
             }
         }
@@ -148,9 +167,18 @@ public class ObjectManager {
                 }
             }
         }
+    }
+    
+    public void checkPuertaTouch(Rectangle.Float hitbox,int selected,Jugador jugador){//puerta fuego
+        if(selected==1){
+                if(hitbox.intersects(puertas.getHitbox())){
+                   
+                    jugador.ganar();
+                }
+            }
 
     }
-
+    
     public void aplicarEfectoJugador(Gemas p ,int selected){//depdende del metodo anteriro este me lleva los puntajes
         if(p.getObjType() == 0&& selected==0){
             new Sound();
