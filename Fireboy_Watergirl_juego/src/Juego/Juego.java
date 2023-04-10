@@ -40,7 +40,7 @@ public class Juego implements Runnable{
         paneljuego.setFocusable(true);
         paneljuego.requestFocus();
         seleccion=new Seleccion(this);
-        playing=new Playing(this,paneljuego);
+        playing=new Playing(this);
         InicioLoop();
     }
 
@@ -58,8 +58,6 @@ public class Juego implements Runnable{
     }
 
     private void actualizar() {
-        
-        
        switch (Gamestate.state){
            case MENU:
                menu.update();
@@ -138,18 +136,17 @@ public class Juego implements Runnable{
             
         if(System.currentTimeMillis()-lastCheck >= 1000){
             lastCheck = System.currentTimeMillis();
-            System.out.println("FPS "+ frames+ " |UPS: "+updates);
             frames = 0;
             updates = 0;
         }
         }
     }
      
-    public void windowFocuseLost(){
-        if(Gamestate.state ==Gamestate.PLAYING){
-            playing.getJugador().resetDirBoolean();
-        }
-    }
+//    public void windowFocuseLost(){
+//        if(Gamestate.state ==Gamestate.PLAYING){
+//            playing.getJugador().resetDirBoolean();
+//        }
+//    }
 
     public Menu getMenu(){
       return menu;

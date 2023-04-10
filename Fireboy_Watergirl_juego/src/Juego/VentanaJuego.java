@@ -26,7 +26,6 @@ public class VentanaJuego {
         frame.addWindowFocusListener(new WindowFocusListener(){
                 @Override
              public void windowGainedFocus(WindowEvent we) {
-                 paneljuego.getJuego().windowFocuseLost();
                          
             }
 

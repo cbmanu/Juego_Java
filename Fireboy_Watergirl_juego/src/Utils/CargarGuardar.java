@@ -8,7 +8,9 @@ import java.awt.Color;
 
 public class CargarGuardar {
     //atributos
-    public static final String JUGADOR_ATLAS = "FireSprites.png";
+    public static final String FIREBOY_ATLAS = "FireSprites.png";
+    public static final String WATERGIRL_ATLAS = "WatergirlSprites.png";
+
     public static final String NIVEL_ATLAS = "outside_sprites.png";
     public static final String NIVEL_ONE_DATA = "level_o_data.png";
     public static final String MENU_BUTTONS="buttons.png";
