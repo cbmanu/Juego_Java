@@ -34,6 +34,7 @@ public class Jugador extends Entidad{
     
     //variables para vivir
     private int currentHealth =1;
+    private int ganar=1;
     
     
     //constructor
@@ -186,6 +187,9 @@ public class Jugador extends Entidad{
             aire = true;
     }
     }
+    public void ganar(){//ESTO VA EN JUGADOR ANTES DEFINE UNA VARIABLE AL LADO DE CURRENT HEALTH QUE DIGA GANAR = 1
+        ganar = 0;
+    }
 
     private void jump() {
         if(aire)
@@ -231,10 +235,7 @@ public class Jugador extends Entidad{
     public void muerte() {//esto esta en el object manager
         currentHealth =0;
     }
-    
-    public void ganar(){
-        currentHealth = 2;
-    }
+
 
     private void cargaAnimaciones(int selected) {
 

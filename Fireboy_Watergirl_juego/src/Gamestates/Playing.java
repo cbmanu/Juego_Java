@@ -20,12 +20,16 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 import ui.GameOverOverlay;
+import ui.GameWinning;
 
 public class Playing extends State implements Statemethods {
 
     private Jugador fireboy;
     private Jugador watergirl;
+    private boolean ganeWinning;
+    private GameWinning gameWinning;
     private JLabel time=juego.getPanelJuego().getTime();
+    private JLabel user=juego.getPanelJuego().getNameWindow();
 
     private NivelManager nivelmanager;
     private ObjectManager objectManager;
@@ -64,6 +68,7 @@ public class Playing extends State implements Statemethods {
         nivelmanager = new NivelManager(juego);
         objectManager = new ObjectManager(this);
         gameOverOverlay = new GameOverOverlay(this);
+        gameWinning = new GameWinning(this);
 
     }
 //    public void windowFocuseLost(){
@@ -83,6 +88,7 @@ public class Playing extends State implements Statemethods {
 
     @Override
     public void update() {
+
         if(gameOver){
 //            gameOverOverlay.update();
         } else if (jugadorMuriendo) {
@@ -107,7 +113,8 @@ public class Playing extends State implements Statemethods {
 
         nivelmanager.draw(g);
         objectManager.draw(g, xnvOffset);
-        
+        if(ganeWinning)
+            gameWinning.draw(g);
         if(gameOver)
             gameOverOverlay.draw(g);
     }
@@ -190,10 +197,13 @@ public class Playing extends State implements Statemethods {
         time.setText("");
         juego.getSeleccion().getTimer().stop();
         jugadorMuriendo=false;
+        ganeWinning = false;
         gameOver=false;
 
     }
-
+    public void setGameWinning(boolean ganeWinning) {
+        this.ganeWinning = ganeWinning;
+    }
 
     public void setGameOver(boolean gameOver) {//invoca en el jugador
         this.gameOver = gameOver;

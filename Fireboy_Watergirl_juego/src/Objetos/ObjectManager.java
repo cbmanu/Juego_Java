@@ -88,7 +88,7 @@ public class ObjectManager {
     }
     
     private void drawPuertaFuego(Graphics g, int xnvOffset) {///
-        g.drawImage(puertaFimg, (int)(puertas.getHitbox().x - xnvOffset),
+        g.drawImage(puertaFimg, 900,
                     80, PUERTAF_WIDTH, PUERTAF_HEIGHT, null);
     }
     private void drawPuertaAgua(Graphics g, int xnvOffset) {///
@@ -171,13 +171,12 @@ public class ObjectManager {
     
     public void checkPuertaTouch(Rectangle.Float hitbox,int selected,Jugador jugador){//puerta fuego
         if(selected==1){
-                if(hitbox.intersects(puertas.getHitbox())){
-                   
-                    jugador.ganar();
-                }
+            if(hitbox.intersects(jugador.getHitbox())){
+                jugador.ganar();
             }
 
-    }
+//ESO VA DENTRO DE checkPuertaTouch
+    }}
     
     public void aplicarEfectoJugador(Gemas p ,int selected){//depdende del metodo anteriro este me lleva los puntajes
         if(p.getObjType() == 0&& selected==0){

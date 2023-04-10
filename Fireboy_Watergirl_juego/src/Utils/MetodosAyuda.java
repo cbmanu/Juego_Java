@@ -164,8 +164,24 @@ public class MetodosAyuda {
                 if(valor == PUERTA_F){
                     lista = new Puertas(i*Juego.Juego.TILES_SIZE, 850, valor);
                     return lista;
-                } 
+                }
             }}
               return lista;
+    }
+    public static Puertas getPuertaAgua(BufferedImage img) {
+        Puertas lista = null;//REVISAR ESTO
+
+        for(int j=0; j<img.getHeight(); j++ ){
+            for(int i=0;i<img.getWidth();i++){
+
+                Color color = new Color(img.getRGB(i, j));
+                int valor = color.getBlue();
+
+                if(valor == PUERTA_A){
+                    lista = new Puertas(i*Juego.Juego.TILES_SIZE, 850, valor);
+                    return lista;
+                }
+            }}
+        return lista;
     }
 }

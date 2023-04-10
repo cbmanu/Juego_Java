@@ -19,7 +19,7 @@ public class Nivel {
     private Plataforma[] plataforma = new Plataforma[2];
     private Agua[] agua = new Agua[3];
     private Lava[] lava = new Lava[3];
-    private Puertas puertas,puertaAgua;
+    private Puertas puertaFuego,puertaAgua;
 
     //constructor 
     public Nivel(int[][] nvData, BufferedImage img){
@@ -49,10 +49,10 @@ public class Nivel {
      }
      
      private void crearPuertaFuego() {
-         puertas = MetodosAyuda.getPuertaFuego(img);
+         puertaFuego = MetodosAyuda.getPuertaFuego(img);
      }
     private void crearPuertaAgua() {
-        puertaAgua = MetodosAyuda.getPuertaFuego(img);
+        puertaAgua = MetodosAyuda.getPuertaAgua(img);
     }
 
 
@@ -81,7 +81,7 @@ public class Nivel {
     }
     
     public Puertas getPuertaF(){
-        return puertas;
+        return puertaFuego;
     }
 
     public Puertas getPuertaW() {
