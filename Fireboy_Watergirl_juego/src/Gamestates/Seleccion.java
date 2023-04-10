@@ -19,7 +19,7 @@ public class Seleccion extends State implements Statemethods {
     private PanelJuego panel=juego.getPanelJuego();
     private JLabel time=juego.getPanelJuego().getTime();
     public int selected=1;
-    private int timeSecs=0;
+    public int timeSecs=0;
 
     private BufferedImage backgroundImg;
     public Seleccion(Juego juego){
@@ -37,9 +37,11 @@ public class Seleccion extends State implements Statemethods {
         character[1]=new Characters(900,150,1);
     }
 
+
     @Override
     public void update() {
-            panel.getNameLabel().setVisible(true);
+        timeSecs=0;
+        panel.getNameLabel().setVisible(true);
             panel.getNameField().setVisible(true);
         for (MenuButtons mb : buttons) {
             mb.update();
@@ -121,8 +123,8 @@ public class Seleccion extends State implements Statemethods {
                                 selected=1;
                             }
                             panel.getNameWindow().setText("Jugador: "+panel.getNameField().getText());
-                            panel.remove(panel.getNameLabel());
-                            panel.remove(panel.getNameField());
+                            panel.getNameLabel().setVisible(false);
+                            panel.getNameField().setVisible(false);
                             panel.getTime().setVisible(true);
                             timer.start();
                         }
@@ -179,6 +181,9 @@ public class Seleccion extends State implements Statemethods {
     }
     public int getSelected(){
         return selected;
+    }
+    public Timer getTimer(){
+        return timer;
     }
 
 }

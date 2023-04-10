@@ -34,6 +34,9 @@ public class CargarGuardar {
 
     public static final String WASD="wasd.png";
     public static final String ARROWS="arrows.png";
+    public static final String PLATAFORMA_P="plataforma_palanca.png";
+    public static final String PLATAFORMA_B="plataforma_boton.png";
+
 
 
 

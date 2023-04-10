@@ -7,6 +7,11 @@ public class ContenedorJuego extends JuegoObjeto{
         super(x, y, objType);
         
     }
+    private void initHitbox(){
+        if(objType==1){
+
+        }
+    }
     
     //esta clase es para las cajas que se deben arrastrar
     //no esta terminada observar esto para los puentes elevadores
