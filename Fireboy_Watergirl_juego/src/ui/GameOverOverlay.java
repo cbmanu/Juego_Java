@@ -2,8 +2,9 @@ package ui;
 
 import Gamestates.Gamestate;
 import Gamestates.Playing;
-import java.awt.Color;
-import java.awt.Graphics;
+import Objetos.ObjectManager;
+
+import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class GameOverOverlay {
@@ -20,14 +21,19 @@ public class GameOverOverlay {
         g.fillRect(0, 0, Juego.Juego.JUEGO_WIDTH, Juego.Juego.JUEGO_HEIGHT);
         
         g.setColor(Color.WHITE);
-        g.drawString("GAME OVER", (Juego.Juego.JUEGO_WIDTH/2), 300);
-        g.drawString("Presione ENTER para volver al inicio", (Juego.Juego.JUEGO_WIDTH/2), 600);
+        g.setFont(new Font("TimesRoman", Font.BOLD, 40));
+        g.drawString("GAME OVER", (Juego.Juego.JUEGO_WIDTH/2-100), 300);
+        g.drawString("Presione ENTER para volver al menu", (Juego.Juego.JUEGO_WIDTH/2-350), 450);
+        g.drawString("Presione ESPACIO para volver a intentar", (Juego.Juego.JUEGO_WIDTH/2-350), 550);
+
     }
     
     public void keyPressed(KeyEvent e){
         if(e.getKeyCode() == KeyEvent.VK_ENTER){
-            playing.resetAll();
             Gamestate.state = Gamestate.MENU;
+            playing.resetAll();
+        }if(e.getKeyCode() == KeyEvent.VK_SPACE){
+            playing.resetAll();
         }
     }
 }

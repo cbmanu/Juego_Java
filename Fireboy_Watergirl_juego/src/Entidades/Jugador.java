@@ -1,7 +1,9 @@
 package Entidades;
 import Gamestates.Playing;
+import Objetos.ObjectManager;
 import Utils.CargarGuardar;
-import static Utils.MetodosAyuda.*;
+import Utils.MetodosAyuda;
+import  Utils.MetodosAyuda.*;
 import static Utils.Constantes.ConstantJugador.*;
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
@@ -10,6 +12,7 @@ import java.awt.image.BufferedImage;
 public class Jugador extends Entidad{
     //atributos
     private Playing playing;
+    private MetodosAyuda ayuda;
     private BufferedImage[][] animaciones;
     private int aniTick, aniIndex, aniSpeed = 15;
     private int jugadorAction = CORRER;
@@ -26,6 +29,7 @@ public class Jugador extends Entidad{
     private float jumpSpeed = -2.25f* Juego.Juego.SCALA;
     private float fallSpeedAfterColision=0.5f * Juego.Juego.SCALA;
     private boolean aire = false;
+    private Rectangle2D.Float rect= new Rectangle2D.Float (0,630,96,12);
     int puntos =0;
     
     //variables para vivir
@@ -43,9 +47,12 @@ public class Jugador extends Entidad{
     public void update(){
         if(currentHealth == 0){
             playing.setGameOver(true);
+            aniTick=0;
+            aniIndex=0;
+            playing.setJugadorMuriendo(true);
             return;
         }
-   
+
         actualizarPosicion();
         if(movimiento){//esto es para el check del object manager
             checkObjetoTouched(); //esto esta aqui
@@ -60,14 +67,15 @@ public class Jugador extends Entidad{
     //para la colicion de gemas que viene del objectmanager
     public void checkObjetoTouched(){
         playing.checkGemaTouched(hitbox);//esto viene del playing
+        playing.checkPlataformaTouched(hitbox);
     }
-    
+
     private void checkLavaTouched() {//cuando toca la lava
-        playing.checkLavaTouched(this); //esta en playing al final
+        playing.checkLavaTouched(hitbox); //esta en playing al final
     }
-    
+
     private void checkAguaTouched() {
-        playing.checkAguaTouched(this);
+        playing.checkAguaTouched(hitbox);
     }
 
     public void render(Graphics g) {
@@ -136,19 +144,19 @@ public class Jugador extends Entidad{
             xVeloci += playerSpeed;
 
         if(!aire){
-            if(!EstaEnSuelo(hitbox, nvData)){
+            if(!ayuda.EstaEnSuelo(hitbox, nvData)){
                 aire = true;
             }
         }
 
         if(aire){
-            if(puedeMover(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, nvData)){
+            if(ayuda.puedeMover(hitbox.x, hitbox.y + airSpeed, hitbox.width, hitbox.height, nvData)){
                 hitbox.y += airSpeed;
                 airSpeed += gravedad;
                 updateXPos(xVeloci);
             }else{
                 //if we cannot move up or down
-                hitbox.y = GetEntityYPosUnderAboveF(hitbox, airSpeed);
+                hitbox.y = ayuda.GetEntityYPosUnderAboveF(hitbox, airSpeed);
                 if(airSpeed>0)
                     resetAire();
                 else
@@ -160,6 +168,17 @@ public class Jugador extends Entidad{
             updateXPos(xVeloci);
 
         movimiento = true;
+    }
+    public void resetAll(){
+        resetDirBoolean();
+        aire=false;
+        movimiento = false;
+        currentHealth=1;
+        hitbox.x=x;
+        hitbox.y = y;
+        if ((!ayuda.EstaEnSuelo(hitbox, nvData))) {
+            aire = true;
+    }
     }
 
     private void jump() {
@@ -173,7 +192,8 @@ public class Jugador extends Entidad{
         aire = false;
         airSpeed=0;
     }
-    
+
+
     //para vivir 
     public void changeHealth(int valor){
         currentHealth = valor;
@@ -184,10 +204,10 @@ public class Jugador extends Entidad{
     }
 
     private void updateXPos(float xVeloci) {
-        if(puedeMover(hitbox.x+xVeloci,hitbox.y, hitbox.width, hitbox.height, nvData)){
+        if(ayuda.puedeMover(hitbox.x+xVeloci,hitbox.y, hitbox.width, hitbox.height, nvData)){
             hitbox.x += xVeloci;
         }else{
-            hitbox.x = GetEntityXPosNextToWall(hitbox,xVeloci);
+            hitbox.x = ayuda.GetEntityXPosNextToWall(hitbox,xVeloci);
         }
 
        }
@@ -231,7 +251,7 @@ public class Jugador extends Entidad{
 
     public void loadNvlData(int[][] nvData){
         this.nvData = nvData;
-        if(EstaEnSuelo(hitbox, nvData))
+        if(ayuda.EstaEnSuelo(hitbox, nvData))
             aire =  true;
     }
 

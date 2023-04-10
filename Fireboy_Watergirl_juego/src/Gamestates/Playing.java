@@ -25,6 +25,7 @@ public class Playing extends State implements Statemethods {
 
     private Jugador fireboy;
     private Jugador watergirl;
+    private JLabel time=juego.getPanelJuego().getTime();
 
     private NivelManager nivelmanager;
     private ObjectManager objectManager;
@@ -37,8 +38,9 @@ public class Playing extends State implements Statemethods {
     private int selected=0;
     private BufferedImage backgroundImg;
     private boolean gameOver;
+    private boolean jugadorMuriendo;
 
-    
+
     //constructor 
     public Playing(Juego juego) {
         super(juego);
@@ -81,10 +83,19 @@ public class Playing extends State implements Statemethods {
 
     @Override
     public void update() {
-        nivelmanager.update();
-        objectManager.update();
-        fireboy.update();
-        watergirl.update();
+        if(gameOver){
+//            gameOverOverlay.update();
+        } else if (jugadorMuriendo) {
+            fireboy.update();
+            watergirl.update();
+        }else {
+            nivelmanager.update();
+            objectManager.update();
+            fireboy.update();
+            watergirl.update();
+        }
+
+
     }
 
     @Override
@@ -172,11 +183,18 @@ public class Playing extends State implements Statemethods {
                 break;
         } }
     }
-    
-    public void resetAll() {//invocada en el gameoveroverlay 
-        
+
+    public void resetAll(){
+        watergirl.resetAll();
+        fireboy.resetAll();
+        time.setText("");
+        juego.getSeleccion().getTimer().stop();
+        jugadorMuriendo=false;
+        gameOver=false;
+
     }
-    
+
+
     public void setGameOver(boolean gameOver) {//invoca en el jugador
         this.gameOver = gameOver;
     }
@@ -188,20 +206,24 @@ public class Playing extends State implements Statemethods {
 
     //esto es para el jugador cuando toca un objeto 
     public void checkGemaTouched(Rectangle2D.Float hitbox){
-        objectManager.checkObjetoTouch(hitbox); //revisar si es el mismo touch
+        objectManager.checkObjetoTouch(hitbox,juego.getSeleccion().getSelected());
+        objectManager.checkObjetoTouch(hitbox,juego.getSeleccion().getSelected()); //revisar si es el mismo touch
+//revisar si es el mismo touch
+    }
+    public void checkPlataformaTouched(Rectangle2D.Float hitbox){
+        objectManager.checkPlataformaTouch(hitbox);
     }
 
-    public void checkLavaTouched(Jugador p) {//esta en jugador
-        //objectManager.checkLavaTouch(p);
-        objectManager.checkLavaTouch(p);
+    public void checkLavaTouched(Rectangle2D.Float hitbox) {//esta en jugador
+        objectManager.checkLavaTouch(hitbox,juego.getSeleccion().getSelected(),watergirl);
     }
 
-    public void checkAguaTouched(Jugador p) {
-        objectManager.checkAguaTouch(p);
+    public void checkAguaTouched(Rectangle2D.Float hitbox) {
+        objectManager.checkAguaTouch(hitbox,juego.getSeleccion().getSelected(),fireboy);
     }
 
-    
 
-    
-    
+    public void setJugadorMuriendo(boolean jugadorMuriendo) {
+        this.jugadorMuriendo=jugadorMuriendo;
+    }
 }
